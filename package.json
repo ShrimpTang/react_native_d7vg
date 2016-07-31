@@ -1,0 +1,19 @@
+{
+  "name": "react_native_d7vg",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "alt": "^0.18.5",
+    "alt-utils": "^1.0.0",
+    "moment": "^2.14.1",
+    "query-string": "^4.2.2",
+    "react": "15.2.1",
+    "react-native": "0.30.0"
+  },
+  "devDependencies": {
+    "http-proxy": "^1.14.0"
+  }
+}

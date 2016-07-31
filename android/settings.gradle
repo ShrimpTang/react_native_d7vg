@@ -1,0 +1,3 @@
+rootProject.name = 'react_native_d7vg'
+
+include ':app'
