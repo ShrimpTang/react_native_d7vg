@@ -10,8 +10,7 @@ import {
     TouchableHighlight,
     Image
 } from 'react-native'
-
-
+import config from '../config'
 
 class TopicItem extends React.Component {
 
@@ -19,30 +18,17 @@ class TopicItem extends React.Component {
     constructor(props) {
         super(props);
         // 初始状态
-        this.state = {
-            topic: {
-                "id": "27855",
-                "psnid": "azarias_wei",
-                "node": "help",
-                "title": "合金装备3 Dremuchij North 这图 说有g",
-                "thumb": "",
-                "views": "4",
-                "count": "0",
-                "date": "1469954325",
-                "avatar": "UP4312/CUSA02383_00-AV00000000000001_D41438EB86C307FB58AB_l",
-                "profilepicture": ""
-            }
-        };
     }
 
     render() {
         var {topic} = this.props;
+        var avatarUri = topic.profilepicture?topic.profilepicture:config.photoUrl+topic.avatar+'.png@50png';
         return (
             <TouchableOpacity activeOpacity={.5}>
                 <View style={styles.container}>
                     <View>
                         <Image style={styles.avatar}
-                               source={{uri: 'http://photo.d7vg.com/avatar/UP4312/CUSA02383_00-AV00000000000001_D41438EB86C307FB58AB_l.png@50png'}}/>
+                               source={{uri: avatarUri}}/>
                     </View>
                     <View style={styles.content}>
                         <View style={styles.title}>
