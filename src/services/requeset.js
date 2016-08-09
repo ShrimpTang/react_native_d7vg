@@ -34,5 +34,5 @@ function filterText(res) {
 }
 
 function filterToJSON(text){
-    return JSON.parse(text);
+    return JSON.parse(text).data;
 }

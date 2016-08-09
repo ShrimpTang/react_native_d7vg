@@ -11,7 +11,7 @@ import {
     Image
 } from 'react-native'
 
-import Separator from './Separator'
+
 
 class TopicItem extends React.Component {
 
@@ -57,7 +57,7 @@ class TopicItem extends React.Component {
                         </View>
                     </View>
                 </View>
-                <Separator />
+
             </TouchableOpacity>
         )
     }
