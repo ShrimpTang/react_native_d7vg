@@ -52,8 +52,9 @@ class TopicItem extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        // backgroundColor: "#0011FF",
-        flexDirection: 'column'
+         backgroundColor: "#039BE5",
+        flexDirection: 'column',
+        marginBottom:10
     },
     avatar: {
         width: 40,
