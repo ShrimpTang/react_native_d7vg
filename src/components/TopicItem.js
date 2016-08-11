@@ -26,9 +26,10 @@ class TopicItem extends React.Component {
         return (
             <TouchableOpacity activeOpacity={.5}>
                 <View style={styles.container}>
-                    <View>
+                    <View style={{flexDirection:'row',height:50,alignItems:'center',backgroundColor:"#4FC3F7"}}>
                         <Image style={styles.avatar}
                                source={{uri: avatarUri}}/>
+                        <Text style={styles.psn_id}>{topic.psnid}</Text>
                     </View>
                     <View style={styles.content}>
                         <View style={styles.title}>
@@ -36,7 +37,7 @@ class TopicItem extends React.Component {
                         </View>
                         <View style={styles.info}>
                             <View style={{flex:1}}>
-                                <Text style={styles.psn_id}>{topic.psnid}</Text>
+
                             </View>
                             <Text style={styles.views}>浏览{topic.views}</Text>
                             <Text style={styles.count}>阅读{topic.count}</Text>
@@ -52,12 +53,13 @@ class TopicItem extends React.Component {
 const styles = StyleSheet.create({
     container: {
         // backgroundColor: "#0011FF",
-        flexDirection: 'row'
+        flexDirection: 'column'
     },
     avatar: {
-        width: 60,
-        height: 60,
+        width: 40,
+        height: 40,
         margin: 5,
+        borderRadius:50
         //backgroundColor: '#ff00aa',
     },
     content: {
@@ -77,12 +79,10 @@ const styles = StyleSheet.create({
     },
     psn_id: {
         borderWidth: 1,
-        borderColor: 'yellow',
-        backgroundColor: 'yellow',
-        alignSelf: 'flex-start',
+        borderColor: '#B3E5FC',
+        backgroundColor: '#B3E5FC',
         borderRadius: 1,
-        overflow: 'hidden',
-        flex: 1
+        overflow: 'hidden', //flex: 1
     },
     views: {
         justifyContent: 'flex-end',
