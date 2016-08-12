@@ -46,7 +46,7 @@ class TopicLayout extends Component {
             var dataSource = this.ds.cloneWithRows(this.props.topics)
             return (
                 <ListView
-                    style={{backgroundColor:'#eeeeee'}}
+                    style={{backgroundColor:'#f9f9f9'}}
                     enableEmptySections={true}
                     dataSource={dataSource}
                     renderRow={rowData=><TopicItem topic={rowData}/>}

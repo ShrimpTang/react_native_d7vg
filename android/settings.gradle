@@ -1,3 +1,6 @@
 rootProject.name = 'react_native_d7vg'
 
 include ':app'
+
+include ':react-native-vector-icons'
+project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')

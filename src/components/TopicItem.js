@@ -12,7 +12,8 @@ import {
 } from 'react-native'
 import config from '../config';
 import moment from 'moment';
-
+import  Icon from 'react-native-vector-icons/MaterialIcons';
+import FabIcon  from './FabIcon';
 class TopicItem extends React.Component {
 
     // 构造
@@ -24,7 +25,7 @@ class TopicItem extends React.Component {
     render() {
         var {topic} = this.props;
         var avatarUri = topic.profilepicture ? topic.profilepicture : config.photoUrl + topic.avatar + '.png@50png';
-        var date = moment(topic.date*1000).fromNow();
+        var date = moment(topic.date * 1000).fromNow();
 
         return (
             <TouchableOpacity activeOpacity={.5}>
@@ -41,10 +42,28 @@ class TopicItem extends React.Component {
                         </View>
                         <View style={styles.info}>
                             <View style={{flex:1}}>
-
                             </View>
-                            <Text style={styles.views}>浏览{topic.views}</Text>
-                            <Text style={styles.count}>阅读{topic.count}</Text>
+
+                            <View style={styles.infoType}>
+                                <FabIcon
+                                    style={{  marginRight: 8, width: 24,height: 24}}
+                                    icon={
+                                        <Icon name="remove-red-eye" size={14}
+                                        color="#6d6d6d"/>
+                                    }
+                                />
+                                <Text style={{fontSize:12,color:'#7b7b7b',marginRight:6}}>{topic.views}</Text>
+                            </View>
+                            <View style={styles.infoType}>
+                                <FabIcon
+                                    style={{ marginRight: 8,width: 24, height: 24}}
+                                    icon={
+                                        <Icon name="insert-comment" size={14}
+                                        color="#6d6d6d"/>
+                                    }
+                                />
+                                <Text style={styles.infoText}>{topic.count}</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -56,26 +75,26 @@ class TopicItem extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        //  backgroundColor: "#039BE5",
         flexDirection: 'column',
-        //marginBottom: 10
+        padding:10,
+        backgroundColor:"#ffffff"
     },
     head: {
         flexDirection: 'row',
         height: 50,
         alignItems: 'center',
-     //   backgroundColor:"#4FC3F7"
+        //   backgroundColor:"#4FC3F7"
     },
     psn_id: {
         overflow: 'hidden',
-        fontSize:14,
+        fontSize: 14,
         //marginLeft:5,
-        flex:1
+        flex: 1
     },
-    date:{
-        fontSize:12,
-        color:'#9e9e9e'
-       // marginRight:10
+    date: {
+        fontSize: 12,
+        color: '#9e9e9e'
+        // marginRight:10
     },
     avatar: {
         width: 40,
@@ -98,15 +117,20 @@ const styles = StyleSheet.create({
     },
     info: {
         flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop:5
     },
-    views: {
-        justifyContent: 'flex-end',
-     //   marginRight: 10
+    infoText: {
+        fontSize: 12,
+        color: '#7b7b7b',
+        marginRight: 6
     },
-    count: {
+    infoType: {
         justifyContent: 'flex-end',
-       // marginRight: 19
-    }
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    infoIcon: {}
 })
 
 export default TopicItem;
