@@ -7,8 +7,11 @@ import {
 } from 'react-native';
 import TopicLayout from './src/layouts/TopicLayout'
 
-class react_native_d7vg extends Component {
+import moment from 'moment';
+import momentLocale from 'moment/locale/zh-cn'; // 多這一行
+moment.updateLocale('zh-cn', momentLocale); // 改這一行
 
+class react_native_d7vg extends Component {
     render() {
         return (
             <View style={styles.container}>

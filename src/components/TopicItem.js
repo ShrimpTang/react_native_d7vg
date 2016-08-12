@@ -10,7 +10,8 @@ import {
     TouchableHighlight,
     Image
 } from 'react-native'
-import config from '../config'
+import config from '../config';
+import moment from 'moment';
 
 class TopicItem extends React.Component {
 
@@ -22,14 +23,17 @@ class TopicItem extends React.Component {
 
     render() {
         var {topic} = this.props;
-        var avatarUri = topic.profilepicture?topic.profilepicture:config.photoUrl+topic.avatar+'.png@50png';
+        var avatarUri = topic.profilepicture ? topic.profilepicture : config.photoUrl + topic.avatar + '.png@50png';
+        var date = moment(topic.date*1000).fromNow();
+
         return (
             <TouchableOpacity activeOpacity={.5}>
                 <View style={styles.container}>
-                    <View style={{flexDirection:'row',height:50,alignItems:'center',backgroundColor:"#4FC3F7"}}>
+                    <View style={styles.head}>
                         <Image style={styles.avatar}
                                source={{uri: avatarUri}}/>
                         <Text style={styles.psn_id}>{topic.psnid}</Text>
+                        <Text style={styles.date}>{date}</Text>
                     </View>
                     <View style={styles.content}>
                         <View style={styles.title}>
@@ -52,15 +56,32 @@ class TopicItem extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-         backgroundColor: "#039BE5",
+        //  backgroundColor: "#039BE5",
         flexDirection: 'column',
-        marginBottom:10
+        //marginBottom: 10
+    },
+    head: {
+        flexDirection: 'row',
+        height: 50,
+        alignItems: 'center',
+        backgroundColor:"#4FC3F7"
+    },
+    psn_id: {
+        overflow: 'hidden',
+        fontSize:14,
+        //marginLeft:5,
+        flex:1
+    },
+    date:{
+        fontSize:12,
+        color:'#9e9e9e'
+       // marginRight:10
     },
     avatar: {
         width: 40,
         height: 40,
         margin: 5,
-        borderRadius:50
+        borderRadius: 50
         //backgroundColor: '#ff00aa',
     },
     content: {
@@ -77,13 +98,6 @@ const styles = StyleSheet.create({
     },
     info: {
         flexDirection: 'row',
-    },
-    psn_id: {
-        borderWidth: 1,
-        borderColor: '#B3E5FC',
-        backgroundColor: '#B3E5FC',
-        borderRadius: 1,
-        overflow: 'hidden', //flex: 1
     },
     views: {
         justifyContent: 'flex-end',
