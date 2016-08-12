@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height: 50,
         alignItems: 'center',
-        backgroundColor:"#4FC3F7"
+     //   backgroundColor:"#4FC3F7"
     },
     psn_id: {
         overflow: 'hidden',
@@ -101,11 +101,11 @@ const styles = StyleSheet.create({
     },
     views: {
         justifyContent: 'flex-end',
-        marginRight: 10
+     //   marginRight: 10
     },
     count: {
         justifyContent: 'flex-end',
-        marginRight: 19
+       // marginRight: 19
     }
 })
 
