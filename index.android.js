@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import TopicLayout from './src/layouts/TopicLayout'
 import GaneLayout from './src/layouts/GaneLayout'
-
+import Hilv from './src/components/HorizontalImageListView'
 
 import moment from 'moment';
 import momentLocale from 'moment/locale/zh-cn'; // 多這一行
@@ -17,7 +17,7 @@ class react_native_d7vg extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <GaneLayout/>
+                <Hilv/>
             </View>
         );
     }
@@ -27,17 +27,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
+    }
 });
 
 AppRegistry.registerComponent('react_native_d7vg', () => react_native_d7vg);
