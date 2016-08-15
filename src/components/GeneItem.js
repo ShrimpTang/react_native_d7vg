@@ -14,7 +14,7 @@ import config from '../config';
 import moment from 'moment';
 import  Icon from 'react-native-vector-icons/MaterialIcons';
 import FabIcon  from './FabIcon';
-class GaneItem extends React.Component {
+class GeneItem extends React.Component {
 
     // 构造
     constructor(props) {
@@ -23,26 +23,27 @@ class GaneItem extends React.Component {
     }
 
     render() {
-        var {gane} = this.props;
-        var avatarUri = gane.profilepicture ? gane.profilepicture : config.photoUrl + gane.avatar + '.png@50png';
-        var date = moment(gane.date * 1000).fromNow();
+        var {gene} = this.props;
+        var avatarUri = gene.profilepicture ? gene.profilepicture : config.photoUrl + gene.avatar + '.png@50png';
+        var date = moment(gene.date * 1000).fromNow();
         return (
             <TouchableOpacity activeOpacity={.5}>
                 <View style={styles.container}>
                     <View style={styles.head}>
                         <Image style={styles.avatar}
                                source={{uri: avatarUri}}/>
-                        <Text style={styles.psn_id}>{gane.psnid}</Text>
+                        <Text style={styles.psn_id}>{gene.psnid}</Text>
                         <Text style={styles.date}>{date}</Text>
                     </View>
                     <View style={styles.content}>
                         <View style={styles.title}>
-                            <Text>{gane.title}</Text>
+                            <Text>{gene.content}</Text>
+                        </View>
+                        <View style={styles.photos}>
                         </View>
                         <View style={styles.info}>
                             <View style={{flex:1}}>
                             </View>
-
                             <View style={styles.infoType}>
                                 <FabIcon
                                     style={{  marginRight: 8, width: 24,height: 24}}
@@ -51,7 +52,7 @@ class GaneItem extends React.Component {
                                         color="#6d6d6d"/>
                                     }
                                 />
-                                <Text style={{fontSize:12,color:'#7b7b7b',marginRight:6}}>{gane.views}</Text>
+                                <Text style={{fontSize:12,color:'#7b7b7b',marginRight:6}}>{gene.views}</Text>
                             </View>
                             <View style={styles.infoType}>
                                 <FabIcon
@@ -61,7 +62,7 @@ class GaneItem extends React.Component {
                                         color="#6d6d6d"/>
                                     }
                                 />
-                                <Text style={styles.infoText}>{gane.rep}</Text>
+                                <Text style={styles.infoText}>{gene.rep}</Text>
                             </View>
                         </View>
                     </View>
@@ -105,14 +106,14 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         flexDirection: 'column',
-        //  backgroundColor: '#ff7755',
         margin: 5
     },
     title: {
-        //backgroundColor: '#00cc33',
         flexWrap: 'wrap',
         flex: 1,
-
+    },
+    photos:{
+        flexDirection:'column'
     },
     info: {
         flexDirection: 'row',
@@ -132,4 +133,4 @@ const styles = StyleSheet.create({
     infoIcon: {}
 })
 
-export default GaneItem;
+export default GeneItem;

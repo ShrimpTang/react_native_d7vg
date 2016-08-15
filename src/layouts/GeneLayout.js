@@ -9,14 +9,14 @@ import {
     ListView,
     RefreshControl
 } from 'react-native'
-import {getGane} from '../services/ganeService'
-import GaneItem from '../components/GaneItem'
+import {getGene} from '../services/geneService'
+import GeneItem from '../components/GeneItem'
 import Separator from '../components/Separator'
-import GaneStore from '../stores/GaneStore'
-import GaneAction from '../actions/GaneAction'
+import GeneStore from '../stores/GeneStore'
+import GeneAction from '../actions/GeneAction'
 import connectToStores from 'alt-utils/lib/connectToStores'
 @connectToStores
-class GaneLayout extends Component {
+class GeneLayout extends Component {
 
     // 构造
     constructor(props) {
@@ -26,11 +26,11 @@ class GaneLayout extends Component {
     }
 
     componentDidMount() {
-        GaneAction.getGanes({page:1})
+        GeneAction.getGenes({page:1})
     }
 
     onRefresh() {
-        GaneAction.getGanes({page:1})
+        GeneAction.getGenes({page:1})
     }
 
     renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
@@ -38,18 +38,18 @@ class GaneLayout extends Component {
     }
 
     onEndReached() {
-        GaneAction.getGanes({page: this.props.page+1})
+        GeneAction.getGenes({page: this.props.page+1})
     }
 
     render() {
-        if (this.props.ganes.length > 0) {
-            var dataSource = this.ds.cloneWithRows(this.props.ganes)
+        if (this.props.genes.length > 0) {
+            var dataSource = this.ds.cloneWithRows(this.props.genes)
             return (
                 <ListView
                     style={{backgroundColor:'#f9f9f9'}}
                     enableEmptySections={true}
                     dataSource={dataSource}
-                    renderRow={rowData=><GaneItem gane={rowData}/>}
+                    renderRow={rowData=><GeneItem gene={rowData}/>}
                     refreshControl={
                        <RefreshControl
                          refreshing={this.props.isRefreshing}
@@ -68,12 +68,12 @@ class GaneLayout extends Component {
     }
 
     static getStores(props) {
-        return [GaneStore]
+        return [GeneStore]
     }
 
     static getPropsFromStores(props) {
-        return GaneStore.getState()
+        return GeneStore.getState()
     }
 }
 
-export default GaneLayout;
+export default GeneLayout;

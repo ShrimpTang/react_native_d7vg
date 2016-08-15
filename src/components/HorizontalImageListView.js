@@ -8,7 +8,6 @@ import {
     ListView,
     Image,
     ScrollView
-
 } from 'react-native';
 
 class HorizontalImageListView extends Component {
@@ -18,16 +17,13 @@ class HorizontalImageListView extends Component {
     }
 
     render() {
-        var photos = [{url:photo1},{url:photo2},{utl:photo3}];
+        var photos = [{url: photo1}, {url: photo2}, {utl: photo3}];
         var dataSource = this.ds.cloneWithRows(photos);
         return (<ScrollView style={{flex:1,backgroundColor:"#eeffee"}} horizontal={true}>
-            <Image resizeMode={Image.resizeMode.cover}  source={{uri:photo1}} style={{width:130,height:150}}/>
-            <Image resizeMode={Image.resizeMode.cover}  source={{uri:photo1}} style={{width:130,height:150}}/>
-            <Image resizeMode={Image.resizeMode.cover}  source={{uri:photo1}} style={{width:130,height:150}}/>
-            <Image resizeMode={Image.resizeMode.cover}  source={{uri:photo1}} style={{width:130,height:150}}/>
-            <Image resizeMode={Image.resizeMode.cover}  source={{uri:photo1}} style={{width:130,height:150}}/>
-            <Image resizeMode={Image.resizeMode.cover}  source={{uri:photo2}} style={{width:130,height:150}}/>
-            <Image resizeMode={Image.resizeMode.cover}  source={{uri:photo3}} style={{width:130,height:150}}/>
+            <Image resizeMode={Image.resizeMode.cover}
+                   source={{uri:photo1}}
+                   style={{width:150,height:150, borderWidth: 3, borderColor: '#f099f0'}}
+            />
         </ScrollView>)
     }
 }

@@ -6,7 +6,7 @@ import {
     View
 } from 'react-native';
 import TopicLayout from './src/layouts/TopicLayout'
-import GaneLayout from './src/layouts/GaneLayout'
+import GeneLayout from './src/layouts/GeneLayout'
 import Hilv from './src/components/HorizontalImageListView'
 
 import moment from 'moment';
@@ -17,7 +17,7 @@ class react_native_d7vg extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Hilv/>
+                <GeneLayout/>
             </View>
         );
     }
