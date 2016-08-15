@@ -3,7 +3,8 @@ import {
     AppRegistry,
     StyleSheet,
     Text,
-    View
+    View,
+    Image
 } from 'react-native';
 import TopicLayout from './src/layouts/TopicLayout'
 import GeneLayout from './src/layouts/GeneLayout'

@@ -1,5 +1,5 @@
 /**
- * Created by Shrimp on 16/7/31.
+ * Created by Shrimp on 10/7/31.
  */
 import React from 'react';
 import {
@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     Image,
-    ScrollView
+    ScrollView,
+    Dimensions
 } from 'react-native'
 import config from '../config';
 import moment from 'moment';
@@ -80,9 +81,10 @@ class GeneItem extends React.Component {
         )
     }
     renderPhotos(){
+        var {height, width} = Dimensions.get('window');
         var {gene} = this.props;
         if(gene.photo){
-            return ( <View style={styles.photos}>
+            return ( <View style={[styles.photos]}>
                 <ScrollView
                     horizontal={true}>
                     {gene.photo.split(',').map(p=> {
@@ -91,13 +93,19 @@ class GeneItem extends React.Component {
                                 key={p}
                                 resizeMode={Image.resizeMode.cover}
                                 source={{uri:config.imgUrl+p+'.jpg'}}
-                                style={{width:120,height:120,marginRight:10}}
+                                style={{width:90,height:90,marginRight:4}}
                             />
                         )
                     })}
 
                 </ScrollView>
             </View>)
+        }
+        if(gene.plus && gene.plus.cover){
+            return (<View style={{marginLeft:10}}>
+                    <Image source={{uri:gene.plus.cover}} style={{width:90,height:90}}/>
+                    <Image style={{position:'absolute',top:-1,left:0,height:93}} esizeMode={Image.resizeMode.cover}  source={require('../assets/image/cover.png')}/>
+                </View>)
         }
     }
 }
@@ -111,11 +119,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height: 50,
         alignItems: 'center',
-        margin: 16
+        margin: 10
         // backgroundColor:"#4FC3F7"
     },
     psn_id: {
-        overflow: 'hidden',
+        //overflow: 'hidden',
         fontSize: 14,
         marginLeft: 6
     },
@@ -132,9 +140,9 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         flexDirection: 'column',
-        marginLeft: 16,
-        marginRight: 16,
-        marginBottom: 16
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 10
     },
     title: {
         flexWrap: 'wrap',
@@ -142,12 +150,15 @@ const styles = StyleSheet.create({
     },
     photos: {
         flexDirection: 'row',
+        marginLeft:10,
+        marginRight:10
+
     },
     info: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 16,
-        marginBottom: 16,
+        marginTop: 10,
+        marginBottom: 10,
         marginRight: 8,
         marginLeft: 8
     },
@@ -159,7 +170,8 @@ const styles = StyleSheet.create({
     infoType: {
         justifyContent: 'flex-end',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+
     },
     infoIcon: {}
 })
