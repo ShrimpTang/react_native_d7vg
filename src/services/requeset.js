@@ -10,7 +10,11 @@ export function get(url = "", params = {}) {
     if (params) {
         url += `?${qs.stringify(params)}`;
     }
-    return fetch(url)
+    return fetch(url,{
+        headers:{
+            'Referer':'http://120.55.124.66:80'
+        }
+    })
         .then(filterStatus)
         .then(filterText)
         .then(filterToJSON)

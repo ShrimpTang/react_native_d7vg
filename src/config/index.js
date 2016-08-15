@@ -3,7 +3,7 @@
  */
 export default {
 //    baseUrl:'http://192.168.1.158:9003/',
-    baseUrl: 'http://192.168.0.175:9003/',
+    baseUrl: 'http://120.55.124.66:80/',
     photoUrl: 'http://photo.d7vg.com/avatar/',
     imgUrl: 'http://ww4.sinaimg.cn/thumb150/'
 }

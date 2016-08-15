@@ -8,7 +8,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     TouchableHighlight,
-    Image
+    Image,
+    ScrollView
 } from 'react-native'
 import config from '../config';
 import moment from 'moment';
@@ -27,98 +28,128 @@ class GeneItem extends React.Component {
         var avatarUri = gene.profilepicture ? gene.profilepicture : config.photoUrl + gene.avatar + '.png@50png';
         var date = moment(gene.date * 1000).fromNow();
         return (
-            <TouchableOpacity activeOpacity={.5}>
+            <View activeOpacity={.5}>
                 <View style={styles.container}>
                     <View style={styles.head}>
                         <Image style={styles.avatar}
                                source={{uri: avatarUri}}/>
-                        <Text style={styles.psn_id}>{gene.psnid}</Text>
+                        <View style={{flex:1,flexDirection:'row'}}>
+                            <Text style={styles.psn_id}>{gene.psnid}</Text>
+                            <View style={{marginTop:4,marginLeft:2}}>
+                                <Icon name="play-arrow" size={12} color={"#0f9d58"}/>
+                            </View>
+                            <View style={{marginLeft:2}}>
+                                <Text style={{fontSize:14,color:"#0f9d58"}}>{gene.title}</Text>
+                            </View>
+                        </View>
                         <Text style={styles.date}>{date}</Text>
                     </View>
                     <View style={styles.content}>
                         <View style={styles.title}>
                             <Text>{gene.content}</Text>
                         </View>
-                        <View style={styles.photos}>
+                    </View>
+                    {this.renderPhotos.bind(this)()}
+                    <View style={styles.info}>
+                        <View style={{flex:1}}>
                         </View>
-                        <View style={styles.info}>
-                            <View style={{flex:1}}>
-                            </View>
-                            <View style={styles.infoType}>
-                                <FabIcon
-                                    style={{  marginRight: 8, width: 24,height: 24}}
-                                    icon={
+                        <View style={styles.infoType}>
+                            <FabIcon
+                                style={{  marginRight: 8, width: 24,height: 24}}
+                                icon={
                                         <Icon name="remove-red-eye" size={14}
                                         color="#6d6d6d"/>
                                     }
-                                />
-                                <Text style={{fontSize:12,color:'#7b7b7b',marginRight:6}}>{gene.views}</Text>
-                            </View>
-                            <View style={styles.infoType}>
-                                <FabIcon
-                                    style={{ marginRight: 8,width: 24, height: 24}}
-                                    icon={
+                            />
+                            <Text style={{fontSize:12,color:'#7b7b7b',marginRight:6}}>{gene.views}</Text>
+                        </View>
+                        <View style={styles.infoType}>
+                            <FabIcon
+                                style={{ marginRight: 8,width: 24, height: 24}}
+                                icon={
                                         <Icon name="insert-comment" size={14}
                                         color="#6d6d6d"/>
                                     }
-                                />
-                                <Text style={styles.infoText}>{gene.rep}</Text>
-                            </View>
+                            />
+                            <Text style={styles.infoText}>{gene.rep}</Text>
                         </View>
                     </View>
                 </View>
 
-            </TouchableOpacity>
+            </View>
         )
+    }
+    renderPhotos(){
+        var {gene} = this.props;
+        if(gene.photo){
+            return ( <View style={styles.photos}>
+                <ScrollView
+                    horizontal={true}>
+                    {gene.photo.split(',').map(p=> {
+                        return (
+                            <Image
+                                key={p}
+                                resizeMode={Image.resizeMode.cover}
+                                source={{uri:config.imgUrl+p+'.jpg'}}
+                                style={{width:120,height:120,marginRight:10}}
+                            />
+                        )
+                    })}
+
+                </ScrollView>
+            </View>)
+        }
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        padding:10,
-        backgroundColor:"#ffffff"
+        backgroundColor: "#ffffff"
     },
     head: {
         flexDirection: 'row',
         height: 50,
         alignItems: 'center',
-        //   backgroundColor:"#4FC3F7"
+        margin: 16
+        // backgroundColor:"#4FC3F7"
     },
     psn_id: {
         overflow: 'hidden',
         fontSize: 14,
-        //marginLeft:5,
-        flex: 1
+        marginLeft: 6
     },
     date: {
         fontSize: 12,
         color: '#9e9e9e'
-        // marginRight:10
     },
     avatar: {
         width: 40,
         height: 40,
-        margin: 5,
         borderRadius: 50
         //backgroundColor: '#ff00aa',
     },
     content: {
         flex: 1,
         flexDirection: 'column',
-        margin: 5
+        marginLeft: 16,
+        marginRight: 16,
+        marginBottom: 16
     },
     title: {
         flexWrap: 'wrap',
         flex: 1,
     },
-    photos:{
-        flexDirection:'column'
+    photos: {
+        flexDirection: 'row',
     },
     info: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop:5
+        marginTop: 16,
+        marginBottom: 16,
+        marginRight: 8,
+        marginLeft: 8
     },
     infoText: {
         fontSize: 12,
