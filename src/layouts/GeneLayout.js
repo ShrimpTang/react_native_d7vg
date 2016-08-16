@@ -37,9 +37,9 @@ class GeneLayout extends Component {
     }
 
     renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
-        var {height, width} = Dimensions.get('window');
-        return <Image source={require('../assets/image/ss.png')}  key={sectionID+'-'+rowID} style={{width:width}}/>
-        //return <Separator key={sectionID+'-'+rowID}/>
+      //  var {height, width} = Dimensions.get('window');
+       // return <Image source={require('../assets/image/ttt.png')}  key={sectionID+'-'+rowID} style={{width:width}}/>
+        return <Separator key={sectionID+'-'+rowID}/>
     }
 
     onEndReached() {

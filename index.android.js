@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import TopicLayout from './src/layouts/TopicLayout'
 import GeneLayout from './src/layouts/GeneLayout'
-import Hilv from './src/components/HorizontalImageListView'
+import UserInfo from './src/components/UserInfo'
 
 import moment from 'moment';
 import momentLocale from 'moment/locale/zh-cn'; // 多這一行
@@ -18,7 +18,7 @@ class react_native_d7vg extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <GeneLayout/>
+                <UserInfo/>
             </View>
         );
     }

@@ -36,12 +36,6 @@ class GeneItem extends React.Component {
                                source={{uri: avatarUri}}/>
                         <View style={{flex:1,flexDirection:'row'}}>
                             <Text style={styles.psn_id}>{gene.psnid}</Text>
-                            <View style={{marginTop:4,marginLeft:2}}>
-                                <Icon name="play-arrow" size={12} color={"#0f9d58"}/>
-                            </View>
-                            <View style={{marginLeft:2}}>
-                                <Text style={{fontSize:14,color:"#0f9d58"}}>{gene.title}</Text>
-                            </View>
                         </View>
                         <Text style={styles.date}>{date}</Text>
                     </View>
@@ -52,7 +46,15 @@ class GeneItem extends React.Component {
                     </View>
                     {this.renderPhotos.bind(this)()}
                     <View style={styles.info}>
-                        <View style={{flex:1}}>
+                        <View style={{flex:1,flexDirection:'row'}}>
+                            {
+                                //<View style={{marginTop:4,marginLeft:2}}>
+                                //    <Icon name="play-arrow" size={12} color={"#0f9d58"}/>
+                                //</View>
+                            }
+                            <View style={{marginLeft:2}}>
+                                <Text style={{fontSize:12,color:"#0f9d58"}}>{gene.title}</Text>
+                            </View>
                         </View>
                         <View style={styles.infoType}>
                             <FabIcon
