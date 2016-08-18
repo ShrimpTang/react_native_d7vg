@@ -3,7 +3,7 @@ import {View,Text,Image} from 'react-native';
 import config from '../config';
 import UserDetail from './UserDetail'
 var user = {
-    "psnid": "Tang_zx",
+    "psnid": "Tang_zx(模拟数据)",
     "region": "hk",
     "name": "Tang_zx",
     "aboutme": "",

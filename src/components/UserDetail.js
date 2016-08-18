@@ -41,7 +41,7 @@ class UserDetail extends Component {
     }
 
     getIcons() {
-        var user = this.props.user;
+        var {type='game',user} = this.props;
         var icons = [];
         if (user.plus === "1") {
             icons.push(<Image key="plus" style={{width:15,height:15,alignSelf:'center'}}
@@ -51,7 +51,7 @@ class UserDetail extends Component {
             icons.push(<Image key="flag" style={{width:15,height:15,marginLeft:10,alignSelf:'center'}}
                               source={{uri:config.flagUrl+user.region+'.png'}}/>)
         }
-        if (user.level) {
+        if (user.level && type=='game') {
             icons.push(
                 <View key="level" style={{flexDirection:'row',marginLeft:10}}>
                     <Image style={{width:15,height:15,alignSelf:'center'}}
