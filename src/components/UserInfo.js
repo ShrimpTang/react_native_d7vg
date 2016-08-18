@@ -15,7 +15,8 @@ import {
     from 'react-native';
 import PlatformTip from './PlatformTip';
 import RatioBar from './RatioBar';
-import Separator from './Separator'
+import Separator from './Separator';
+import UserDetail from './UserDetail'
 import moment from 'moment';
 
 const userGame = [{
@@ -304,7 +305,7 @@ class UserInfo extends Component {
                       style={{flex:1}}
                       dataSource={dataSource}
                       renderRow={rowData=>{return <GameItem key={rowData.gid} game={rowData}/>}}
-                      renderHeader={()=><User user={user}/>}
+                      renderHeader={()=><UserDetail user={user} type="game"/>}
                   />
         )
         //(<Image
@@ -346,99 +347,6 @@ const GameItem = (props) =>{
             <RatioBar ratio={game.ratio}/>
         </View>
     </View>}
-
-
-const User = (props)=>{
-    var user = props.user;
-    var avatarUri = user.profilepicture ? user.profilepicture : config.photoUrl + user.avatar + '.png@100w.png';
-    function getIcons() {
-        var icons = [];
-        if (user.plus === "1") {
-            icons.push(<Image key="plus" style={{width:15,height:15,alignSelf:'center'}}
-                              source={require('../assets/image/plus.png')}/>)
-        }
-        if (user.region !== "") {
-            icons.push(<Image key="flag" style={{width:15,height:15,marginLeft:10,alignSelf:'center'}}
-                              source={{uri:config.flagUrl+user.region+'.png'}}/>)
-        }
-        if (user.level) {
-            icons.push(
-                <View key="level" style={{flexDirection:'row',marginLeft:10}}>
-                    <Image style={{width:15,height:15,alignSelf:'center'}}
-                           source={require('../assets/image/level.png')}/>
-                    <Text style={{color:'#F9BD0E'}}>{user.level}</Text>
-                    <Text style={{color:'rgba(255,255,255,0.4)',marginLeft:6}}>{user.progress}%</Text>
-                </View>
-            )
-        }
-
-        return icons
-    }
-    return <View style={styles.userInfoContainer}>
-        <View style={{flexDirection:'column',flex:1}}>
-            <View style={{flexDirection:'row',margin:16,marginBottom:4}}>
-                <Image source={{uri:avatarUri}} style={{width: 100,height:100,borderRadius: 50}}/>
-                <View style={{flexDirection:'column',justifyContent:'center',marginLeft:8}}>
-                    <Text style={{color:'white',fontWeight:'bold',fontSize:18}}>{user.psnid}</Text>
-                    <View style={{flexDirection:'row',marginTop:5}}>
-                        {getIcons()}
-                    </View>
-                    <View style={{flexDirection:'row'}}>
-                        <Text style={{color:'#7a96d1'}}>白{user.platinum}</Text>
-                        <Text style={{color:'#cd9a46',marginLeft:5}}>金{user.gold}</Text>
-                        <Text style={{color:'#a6a6a6',marginLeft:5}}>银{user.silver}</Text>
-                        <Text style={{color:'#bf6a3a',marginLeft:5}}>铜{user.bronze}</Text>
-                        {
-                            //<Text style={{color:'rgba(255,255,255,0.4)',marginLeft:3}}>总{parseInt(user.platinum)+parseInt(user.gold)+parseInt(user.silver)+parseInt(user.bronze)}</Text>
-                        }
-                    </View>
-                </View>
-            </View>
-        </View>
-        <View style={{backgroundColor: '#1976D2',height:50,flexDirection:'row'}}>
-            <View style={styles.smallCard}>
-                <Text style={styles.cardCount}>
-                    {user.totalgame}
-                </Text>
-                <Text style={styles.cardTitle}>
-                    总游戏
-                </Text>
-            </View>
-            <View style={styles.smallCard}>
-                <Text style={styles.cardCount}>
-                    {user.perfect}
-                </Text>
-                <Text style={styles.cardTitle}>
-                    完美数
-                </Text>
-            </View>
-            <View style={styles.smallCard}>
-                <Text style={styles.cardCount}>
-                    {user.hole}
-                </Text>
-                <Text style={styles.cardTitle}>
-                    坑数
-                </Text>
-            </View>
-            <View style={styles.smallCard}>
-                <Text style={styles.cardCount}>
-                    {user.rarity}
-                </Text>
-                <Text style={styles.cardTitle}>
-                    完成率
-                </Text>
-            </View>
-            <View style={styles.smallCard}>
-                <Text style={styles.cardCount}>
-                    {user.befollow}
-                </Text>
-                <Text style={styles.cardTitle}>
-                    被关注
-                </Text>
-            </View>
-        </View>
-    </View>
-}
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column'

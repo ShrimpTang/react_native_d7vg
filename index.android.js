@@ -4,23 +4,33 @@ import {
     StyleSheet,
     Text,
     View,
-    Image
+    Image,
+    DrawerLayoutAndroid,
+    StatusBar
 } from 'react-native';
 import TopicLayout from './src/layouts/TopicLayout'
 import GeneLayout from './src/layouts/GeneLayout'
 import UserInfo from './src/components/UserInfo'
-
+import NavigationView from './src/components/NavigationView'
 import moment from 'moment';
-import momentLocale from 'moment/locale/zh-cn'; // 多這一行
-moment.updateLocale('zh-cn', momentLocale); // 改這一行
+import momentLocale from 'moment/locale/zh-cn';
+moment.updateLocale('zh-cn', momentLocale);
 
 class react_native_d7vg extends Component {
     render() {
+        var navigationView = (
+            <NavigationView/>
+        );
         return (
-            <View style={styles.container}>
+            <DrawerLayoutAndroid
+                drawerWidth ={350}
+            drawerPosition={DrawerLayoutAndroid.positions.Left}
+            statusBarBackgroundColor='#1565C0'
+            renderNavigationView={() => navigationView}>
+            <View style={{flex: 1}}>
                 <UserInfo/>
             </View>
-        );
+        </DrawerLayoutAndroid>)
     }
 }
 
