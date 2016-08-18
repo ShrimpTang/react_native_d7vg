@@ -6,13 +6,16 @@ import {View,Text,StyleSheet} from 'react-native';
 
 class PlatformTip extends Component {
     render() {
+
         var style = {
             width: 30,
             height: 17,
             justifyContent: 'center',
             alignItems: 'center'
+        } , text;
+        if(this.props.style){
+            Object.assign(style,this.props.style)
         }
-            , text;
         switch (this.props.platform) {
             case 'ps3':
                 text = 'PS3';

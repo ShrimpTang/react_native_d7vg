@@ -8,41 +8,15 @@ import {
     Text,
     Image,
     StyleSheet,
-    Dimensions
+    Dimensions,
+    ListView,
+    ScorllView
 }
     from 'react-native';
-import PlatformTip from './PlatformTip'
+import PlatformTip from './PlatformTip';
+import RatioBar from './RatioBar';
+import Separator from './Separator'
 import moment from 'moment';
-
-const user = {
-    "psnid": "Tang_zx",
-    "region": "hk",
-    "name": "Tang_zx",
-    "aboutme": "",
-    "plus": "1",
-    "avatar": "JP0031\/CUSA01054_00-AVATAR1505NEP010_085CC956F3B47D170BED_l",
-    "profilepicture": "",
-    "point": "29355",
-    "level": "13",
-    "progress": "66",
-    "platinum": "11",
-    "gold": "69",
-    "silver": "465",
-    "bronze": "481",
-    "rank": "9116",
-    "totalgame": "115",
-    "perfect": "13",
-    "hole": "85",
-    "rarity": "18.37",
-    "follow": "2",
-    "befollow": "2",
-    "topic": "1",
-    "fav": "5",
-    "shoucang": "5",
-    "nb": "1152",
-    "qidaodate": "1471281625",
-    "datadate": "1471274649"
-};
 
 const userGame = [{
     "gid": "11345",
@@ -286,105 +260,52 @@ const userGame = [{
     "complete": "143"
 }];
 
+const user = {
+    "psnid": "Tang_zx(模拟数据)",
+    "region": "hk",
+    "name": "Tang_zx",
+    "aboutme": "",
+    "plus": "1",
+    "avatar": "JP0031\/CUSA01054_00-AVATAR1505NEP010_085CC956F3B47D170BED_l",
+    "profilepicture": "",
+    "point": "29355",
+    "level": "13",
+    "progress": "66",
+    "platinum": "11",
+    "gold": "69",
+    "silver": "465",
+    "bronze": "481",
+    "rank": "9116",
+    "totalgame": "115",
+    "perfect": "13",
+    "hole": "85",
+    "rarity": "18.37",
+    "follow": "2",
+    "befollow": "2",
+    "topic": "1",
+    "fav": "5",
+    "shoucang": "5",
+    "nb": "1152",
+    "qidaodate": "1471281625",
+    "datadate": "1471274649"
+};
 class UserInfo extends Component {
+    constructor(props){
+        super(props)
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2});
+    }
     render() {
-        var game = {
-            "gid": "11345",
-            "count": "1,6,10,10",
-            "psnid": "Tang_zx",
-            "ratio": "100",
-            "date": "1471274607",
-            "cnname": "√Letter",
-            "node": "root-letter",
-            "title": "√Letter-方根書簡-",
-            "platform": "psvita",
-            "owner": "938",
-            "complete": "540"
-        }
-        var date = moment(game.date * 1000).fromNow();
-        var avatarUri = user.profilepicture ? user.profilepicture : config.photoUrl + user.avatar + '.png@100w.png';
-        return (
-            <View style={styles.container}>
-            <View style={styles.userInfoContainer}>
-            <View style={{flexDirection:'column',flex:1}}>
-                <View style={{flexDirection:'row',margin:16,marginBottom:4}}>
-                    <Image source={{uri:avatarUri}} style={{width: 100,height:100,borderRadius: 50}}/>
-                    <View style={{flexDirection:'column',justifyContent:'center',marginLeft:8}}>
-                        <Text style={{color:'white',fontWeight:'bold',fontSize:18}}>{user.psnid}</Text>
-                        <View style={{flexDirection:'row',marginTop:5}}>
-                            {this.getIcons()}
-                        </View>
-                        <View style={{flexDirection:'row'}}>
-                            <Text style={{color:'#7a96d1'}}>白{user.platinum}</Text>
-                            <Text style={{color:'#cd9a46',marginLeft:5}}>金{user.gold}</Text>
-                            <Text style={{color:'#a6a6a6',marginLeft:5}}>银{user.silver}</Text>
-                            <Text style={{color:'#bf6a3a',marginLeft:5}}>铜{user.bronze}</Text>
-                            {
-                                //<Text style={{color:'rgba(255,255,255,0.4)',marginLeft:3}}>总{parseInt(user.platinum)+parseInt(user.gold)+parseInt(user.silver)+parseInt(user.bronze)}</Text>
-                            }
-                        </View>
-                    </View>
-                </View>
-            </View>
-            <View style={{backgroundColor: '#1976D2',height:50,flexDirection:'row'}}>
-                <View style={styles.smallCard}>
-                    <Text style={styles.cardCount}>
-                        {user.totalgame}
-                    </Text>
-                    <Text style={styles.cardTitle}>
-                        总游戏
-                    </Text>
-                </View>
-                <View style={styles.smallCard}>
-                    <Text style={styles.cardCount}>
-                        {user.perfect}
-                    </Text>
-                    <Text style={styles.cardTitle}>
-                        完美数
-                    </Text>
-                </View>
-                <View style={styles.smallCard}>
-                    <Text style={styles.cardCount}>
-                        {user.hole}
-                    </Text>
-                    <Text style={styles.cardTitle}>
-                        坑数
-                    </Text>
-                </View>
-                <View style={styles.smallCard}>
-                    <Text style={styles.cardCount}>
-                        {user.rarity}
-                    </Text>
-                    <Text style={styles.cardTitle}>
-                        完成率
-                    </Text>
-                </View>
-                <View style={styles.smallCard}>
-                    <Text style={styles.cardCount}>
-                        {user.befollow}
-                    </Text>
-                    <Text style={styles.cardTitle}>
-                        被关注
-                    </Text>
-                </View>
-            </View>
-            </View>
-                <View style={styles.userGame}>
-                  <View style={{height:70,backgroundColor:'#64B5F6',flexDirection:'row',alignItems:'center'}}>
-                      <Image
-                          resizeMode={Image.resizeMode.cover}
-                          source={{uri:config.psnGameCoverUrl+game.gid+'.png@100w.png'}}
-                          style={{height:55,width:100}}
-                      />
-                      <View style={{flexDirection:'column',flex:1,marginLeft:7}}>
-                          <Text style={{color:'black',marginBottom:3}}>{game.cnname}</Text>
-                          <Text style={{color:'black',fontSize:12,marginBottom:3}}>{date}</Text>
-                          <PlatformTip platform="ps3"/>
-                      </View>
+        var dataSource = this.ds.cloneWithRows(userGame);
 
-                  </View>
-                </View>
-        </View>
+        return (
+
+                  <ListView
+                      renderSeparator={this.renderSeparator.bind(this)}
+                      style={{flex:1}}
+                      dataSource={dataSource}
+                      renderRow={rowData=>{return <GameItem key={rowData.gid} game={rowData}/>}}
+                      renderHeader={()=><User user={user}/>}
+                  />
         )
         //(<Image
         //    resizeMode={Image.resizeMode.cover}
@@ -394,8 +315,43 @@ class UserInfo extends Component {
         //</Image>)
 
     }
+    renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+        return (<Separator key={sectionID+'-'+rowID}/>)
+    }
 
-    getIcons() {
+}
+
+
+const GameItem = (props) =>{
+    var game = props.game;
+    var date = moment(game.date * 1000).fromNow();
+    return <View style={{height:70,flexDirection:'row',alignItems:'center',marginLeft:5,marginRight:5}}>
+        <Image
+            resizeMode={Image.resizeMode.cover}
+            source={{uri:config.psnGameCoverUrl+game.gid+'.png@100w.png'}}
+            style={{height:55,width:100}}
+        />
+        <View style={{flexDirection:'column',flex:1,marginLeft:7}}>
+            <Text style={{color:'#3498db',marginBottom:3}}>{game.cnname}</Text>
+            <Text style={{color:'#AAA',fontSize:12,marginBottom:3}}>{date}</Text>
+            <View style={{flexDirection:'row'}}>
+                {
+                    game.platform.split(',').map(pl=> {
+                        return <PlatformTip style={{marginRight:5}} key={pl} platform={pl}/>
+                    })
+                }
+            </View>
+        </View>
+        <View style={{alignSelf:'flex-end',paddingBottom:10,}}>
+            <RatioBar ratio={game.ratio}/>
+        </View>
+    </View>}
+
+
+const User = (props)=>{
+    var user = props.user;
+    var avatarUri = user.profilepicture ? user.profilepicture : config.photoUrl + user.avatar + '.png@100w.png';
+    function getIcons() {
         var icons = [];
         if (user.plus === "1") {
             icons.push(<Image key="plus" style={{width:15,height:15,alignSelf:'center'}}
@@ -418,11 +374,74 @@ class UserInfo extends Component {
 
         return icons
     }
+    return <View style={styles.userInfoContainer}>
+        <View style={{flexDirection:'column',flex:1}}>
+            <View style={{flexDirection:'row',margin:16,marginBottom:4}}>
+                <Image source={{uri:avatarUri}} style={{width: 100,height:100,borderRadius: 50}}/>
+                <View style={{flexDirection:'column',justifyContent:'center',marginLeft:8}}>
+                    <Text style={{color:'white',fontWeight:'bold',fontSize:18}}>{user.psnid}</Text>
+                    <View style={{flexDirection:'row',marginTop:5}}>
+                        {getIcons()}
+                    </View>
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={{color:'#7a96d1'}}>白{user.platinum}</Text>
+                        <Text style={{color:'#cd9a46',marginLeft:5}}>金{user.gold}</Text>
+                        <Text style={{color:'#a6a6a6',marginLeft:5}}>银{user.silver}</Text>
+                        <Text style={{color:'#bf6a3a',marginLeft:5}}>铜{user.bronze}</Text>
+                        {
+                            //<Text style={{color:'rgba(255,255,255,0.4)',marginLeft:3}}>总{parseInt(user.platinum)+parseInt(user.gold)+parseInt(user.silver)+parseInt(user.bronze)}</Text>
+                        }
+                    </View>
+                </View>
+            </View>
+        </View>
+        <View style={{backgroundColor: '#1976D2',height:50,flexDirection:'row'}}>
+            <View style={styles.smallCard}>
+                <Text style={styles.cardCount}>
+                    {user.totalgame}
+                </Text>
+                <Text style={styles.cardTitle}>
+                    总游戏
+                </Text>
+            </View>
+            <View style={styles.smallCard}>
+                <Text style={styles.cardCount}>
+                    {user.perfect}
+                </Text>
+                <Text style={styles.cardTitle}>
+                    完美数
+                </Text>
+            </View>
+            <View style={styles.smallCard}>
+                <Text style={styles.cardCount}>
+                    {user.hole}
+                </Text>
+                <Text style={styles.cardTitle}>
+                    坑数
+                </Text>
+            </View>
+            <View style={styles.smallCard}>
+                <Text style={styles.cardCount}>
+                    {user.rarity}
+                </Text>
+                <Text style={styles.cardTitle}>
+                    完成率
+                </Text>
+            </View>
+            <View style={styles.smallCard}>
+                <Text style={styles.cardCount}>
+                    {user.befollow}
+                </Text>
+                <Text style={styles.cardTitle}>
+                    被关注
+                </Text>
+            </View>
+        </View>
+    </View>
 }
-
 const styles = StyleSheet.create({
-    container:{
-        flexDirection:'column'
+    container: {
+        flexDirection: 'column'
     },
     userInfoContainer: {
         height: 180,
@@ -442,8 +461,8 @@ const styles = StyleSheet.create({
         color: 'rgba(255,255,255,0.4)',
         fontSize: 12
     },
-    userGame:{
-        flexDirection:'column'
+    userGame: {
+        flexDirection: 'column'
     }
 })
 export  default UserInfo
