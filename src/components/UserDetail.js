@@ -31,10 +31,6 @@ class UserDetail extends Component {
                 <View style={{backgroundColor: '#1976D2',height:50,flexDirection:'row'}}>
                     {this.getBottom()}
 
-
-
-
-
                 </View>
             </View>
                     )
@@ -58,6 +54,28 @@ class UserDetail extends Component {
                            source={require('../assets/image/level.png')}/>
                     <Text style={{color:'#F9BD0E'}}>{user.level}</Text>
                     <Text style={{color:'rgba(255,255,255,0.4)',marginLeft:6}}>{user.progress}%</Text>
+                </View>
+            )
+        }
+        if(type!='game' &&  user.nb){
+            var nb = parseInt(user.nb);
+            var gold = Math.floor(nb/10000);
+            nb = nb - gold *10000;
+            var silver  = Math.floor(nb/100);
+            nb = nb - silver *100;
+            var str = '';
+            if(gold!=0){
+                str+=gold+'金';
+            }
+            if((gold!=0 && silver==0) || (gold==0 && silver!=0)){
+                str+=silver+'银';
+            }
+            str +=nb+'铜';
+            icons.push(
+                <View key="level" style={{flexDirection:'row',marginLeft:10}}>
+                    <Image style={{width:15,height:15,alignSelf:'center'}}
+                           source={require('../assets/image/money.png')}/>
+                    <Text style={{color:'rgba(255,255,255,0.4)',marginLeft:6}}>{str}</Text>
                 </View>
             )
         }

@@ -28,7 +28,7 @@ class react_native_d7vg extends Component {
             statusBarBackgroundColor='#1565C0'
             renderNavigationView={() => navigationView}>
             <View style={{flex: 1}}>
-                <UserInfo/>
+                <TopicLayout/>
             </View>
         </DrawerLayoutAndroid>)
     }

@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import {View,Text,Image} from 'react-native';
+import {View,Text,Image,ScrollView} from 'react-native';
 import config from '../config';
-import UserDetail from './UserDetail'
+import UserDetail from './UserDetail';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 var user = {
     "psnid": "Tang_zx(模拟数据)",
     "region": "hk",
@@ -39,6 +40,46 @@ class NavigationView extends Component {
                     <UserDetail user={user} width={90} type="nav"/>
                 </View>
             </View>
+            <ScrollView style={{flexDirection:'column'}}>
+
+                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
+                        <Icon name="home" color="#757575" size={25}/>
+                    </View>
+                    <Text style={{color:'#757575',flex:1}}>社区</Text>
+                </View>
+                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
+                        <Icon name="videogame-asset" color="#757575" size={25}/>
+                    </View>
+                    <Text style={{color:'#757575',flex:1}}>游戏</Text>
+                </View>
+                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
+                        <Icon name="store" color="#757575" size={25}/>
+                    </View>
+                    <Text style={{color:'#757575',flex:1}}>Store</Text>
+                </View>
+                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
+                        <Icon name="group" color="#757575" size={25}/>
+                    </View>
+                    <Text style={{color:'#757575',flex:1}}>约战</Text>
+                </View>
+                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
+                        <Icon name="public" color="#757575" size={25}/>
+                    </View>
+                    <Text style={{color:'#757575',flex:1}}>机因</Text>
+                </View>
+                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
+                        <Icon name="settings" color="#757575" size={25}/>
+                    </View>
+                    <Text style={{color:'#757575',flex:1}}>设置</Text>
+                </View>
+
+            </ScrollView>
         </View>)
     }
 }
