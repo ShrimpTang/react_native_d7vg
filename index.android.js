@@ -6,7 +6,8 @@ import {
     View,
     Image,
     DrawerLayoutAndroid,
-    StatusBar
+    StatusBar,
+    Navigator
 } from 'react-native';
 import TopicLayout from './src/layouts/TopicLayout'
 import GeneLayout from './src/layouts/GeneLayout'
@@ -28,9 +29,19 @@ class react_native_d7vg extends Component {
             statusBarBackgroundColor='#1565C0'
             renderNavigationView={() => navigationView}>
             <View style={{flex: 1}}>
-                <TopicLayout/>
+                <Navigator
+                    initialRoute={{name:'topic'}}
+                    renderScene={this.renderScene}
+                />
             </View>
         </DrawerLayoutAndroid>)
+    }
+    renderScene(route,navigator){
+        switch (route.name){
+            case 'topic':
+                    return <TopicLayout/>
+                break;
+        }
     }
 }
 

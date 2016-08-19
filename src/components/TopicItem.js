@@ -28,7 +28,7 @@ class TopicItem extends React.Component {
         var date = moment(topic.date * 1000).fromNow();
 
         return (
-            <TouchableOpacity activeOpacity={.5}>
+            <View activeOpacity={.5}>
                 <View style={styles.container}>
                     <View style={styles.head}>
                         <Image style={styles.avatar}
@@ -68,7 +68,7 @@ class TopicItem extends React.Component {
                     </View>
                 </View>
 
-            </TouchableOpacity>
+            </View>
         )
     }
 }
