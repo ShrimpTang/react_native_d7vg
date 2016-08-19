@@ -34,6 +34,7 @@ var user = {
 }
 class NavigationView extends Component {
     render() {
+        console.log(this.props.navigator)
         return (<View style={{flex:1}}>
             <View style={{height:200,backgroundColor:'#1565C0'}}>
                 <View style={{marginTop:20}}>
