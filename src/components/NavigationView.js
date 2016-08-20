@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
-import {View,Text,Image,ScrollView} from 'react-native';
+import {View,Text,Image,ScrollView,TouchableOpacity} from 'react-native';
 import config from '../config';
 import UserDetail from './UserDetail';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import NavigationItem from  './NavigationItem';
 var user = {
     "psnid": "Tang_zx(模拟数据)",
     "region": "hk",
@@ -33,8 +34,11 @@ var user = {
     "datadate": "1471490136"
 }
 class NavigationView extends Component {
+    static contextTypes = {
+        navigator: React.PropTypes.object,
+        drawer:React.PropTypes.object
+    };
     render() {
-        console.log(this.props.navigator)
         return (<View style={{flex:1}}>
             <View style={{height:200,backgroundColor:'#1565C0'}}>
                 <View style={{marginTop:20}}>
@@ -42,46 +46,24 @@ class NavigationView extends Component {
                 </View>
             </View>
             <ScrollView style={{flexDirection:'column'}}>
-
-                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
-                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
-                        <Icon name="home" color="#757575" size={25}/>
-                    </View>
-                    <Text style={{color:'#757575',flex:1}}>社区</Text>
-                </View>
-                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
-                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
-                        <Icon name="videogame-asset" color="#757575" size={25}/>
-                    </View>
-                    <Text style={{color:'#757575',flex:1}}>游戏</Text>
-                </View>
-                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
-                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
-                        <Icon name="store" color="#757575" size={25}/>
-                    </View>
-                    <Text style={{color:'#757575',flex:1}}>Store</Text>
-                </View>
-                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
-                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
-                        <Icon name="group" color="#757575" size={25}/>
-                    </View>
-                    <Text style={{color:'#757575',flex:1}}>约战</Text>
-                </View>
-                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
-                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
-                        <Icon name="public" color="#757575" size={25}/>
-                    </View>
-                    <Text style={{color:'#757575',flex:1}}>机因</Text>
-                </View>
-                <View style={{height:50,flexDirection:'row',alignItems:'center'}}>
-                    <View style={{flex:.3,justifyContent:'center',alignItems:"center"}}>
-                        <Icon name="settings" color="#757575" size={25}/>
-                    </View>
-                    <Text style={{color:'#757575',flex:1}}>设置</Text>
-                </View>
-
+                <NavigationItem {...this.context} name="topic" displayName="社区" iconName="home"/>
+                <NavigationItem {...this.context} name="game" displayName="游戏" iconName="videogame-asset"/>
+                <NavigationItem {...this.context} name="store" displayName="Store" iconName="store"/>
+                <NavigationItem {...this.context} name="group" displayName="约战" iconName="group"/>
+                <NavigationItem {...this.context} name="gene" displayName="机因" iconName="public"/>
+                <NavigationItem {...this.context} name="settings" displayName="设置" iconName="settings"/>
             </ScrollView>
         </View>)
+    }
+    onItemPress(name){
+        var {navigator,drawer} =  this.context;
+        if(navigator && drawer){
+            drawer.closeDrawer();
+            navigator.push({
+                name
+            })
+
+        }
     }
 }
 export default NavigationView;
