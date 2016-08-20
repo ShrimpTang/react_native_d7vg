@@ -17,25 +17,29 @@ import TopicStore from '../stores/TopicStore'
 import TopicAction from '../actions/TopicAction'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import CommonItem from '../components/CommonItem'
 @connectToStores
 class TopicLayout extends Component {
     static contextTypes = {
-        drawer:React.PropTypes.object
+        drawer: React.PropTypes.object
     };
 
     // 构造
     constructor(props) {
         super(props);
+        this.state = {
+            node: ''
+        }
         // 初始状态
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2});
     }
 
     componentDidMount() {
-        TopicAction.getTopics({page:1})
+        TopicAction.getTopics({page: 1,node:this.state.node})
     }
 
     onRefresh() {
-        TopicAction.getTopics({page:1})
+        TopicAction.getTopics({page: 1,node:this.state.node})
     }
 
     renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
@@ -43,15 +47,47 @@ class TopicLayout extends Component {
     }
 
     onEndReached() {
-        TopicAction.getTopics({page: this.props.page+1})
+        TopicAction.getTopics({page: this.props.page + 1,node:this.state.node})
     }
-    onIconClicked(){
-        if(this.context.drawer){
+
+    onIconClicked() {
+        if (this.context.drawer) {
             this.context.drawer.openDrawer();
         }
     }
-    onActionSelected(index){
-        console.log(index)
+
+    onActionSelected(index) {
+        var node = '';
+        switch (index) {
+            case 1:
+                node = 'news';
+                break;
+            case 2:
+                node = 'guide';
+                break;
+            case 3:
+                node = 'review';
+                break;
+            case 4:
+                node = 'exp';
+                break;
+            case 5:
+                node = 'plus';
+                break;
+            case 6:
+                node = 'openbox';
+                break;
+            case 7:
+                node = 'gamelist';
+                break;
+            case 8:
+                node = 'event';
+                break;
+        }
+        this.setState({
+            node
+        })
+        TopicAction.getTopics({page: 1, node})
     }
 
     render() {
@@ -61,7 +97,7 @@ class TopicLayout extends Component {
                 <View style={{flex:1}}>
                     <Icon.ToolbarAndroid
                         style={{height:56,backgroundColor:"#2196F3"}}
-                        title="Home"
+                        title="社区"
                         titleColor="#fff"
                         navIconName="menu"
                         onIconClicked={this.onIconClicked.bind(this)}
@@ -85,7 +121,7 @@ class TopicLayout extends Component {
                         style={{backgroundColor:'#f9f9f9'}}
                         enableEmptySections={true}
                         dataSource={dataSource}
-                        renderRow={rowData=><TopicItem topic={rowData}/>}
+                        renderRow={rowData=><CommonItem type="topic" item={rowData}/>}
                         refreshControl={
                        <RefreshControl
                          refreshing={this.props.isRefreshing}
@@ -97,7 +133,7 @@ class TopicLayout extends Component {
                         onEndReachedThreshold={10}
                     />
 
-                    </View>
+                </View>
 
             );
         } else {

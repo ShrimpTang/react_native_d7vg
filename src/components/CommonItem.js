@@ -16,7 +16,7 @@ import config from '../config';
 import moment from 'moment';
 import  Icon from 'react-native-vector-icons/MaterialIcons';
 import FabIcon  from './FabIcon';
-class GeneItem extends React.Component {
+class CommonItem extends React.Component {
 
     // 构造
     constructor(props) {
@@ -25,9 +25,14 @@ class GeneItem extends React.Component {
     }
 
     render() {
-        var {gene} = this.props;
-        var avatarUri = gene.profilepicture ? gene.profilepicture : config.photoUrl + gene.avatar + '.png@50png';
-        var date = moment(gene.date * 1000).fromNow();
+        var {item,type} = this.props;
+        if(type=='topic'){
+            item.$$preview = item.title;
+        }else{
+            item.$$preview = item.content;
+        }
+        var avatarUri = item.profilepicture ? item.profilepicture : config.photoUrl + item.avatar + '.png@50png';
+        var date = moment(item.date * 1000).fromNow();
         return (
             <View activeOpacity={.5}>
                 <View style={styles.container}>
@@ -35,13 +40,13 @@ class GeneItem extends React.Component {
                         <Image style={styles.avatar}
                                source={{uri: avatarUri}}/>
                         <View style={{flex:1,flexDirection:'row'}}>
-                            <Text style={styles.psn_id}>{gene.psnid}</Text>
+                            <Text style={styles.psn_id}>{item.psnid}</Text>
                         </View>
                         <Text style={styles.date}>{date}</Text>
                     </View>
                     <View style={styles.content}>
                         <View style={styles.title}>
-                            <Text>{gene.content}</Text>
+                            <Text>{item.$$preview}</Text>
                         </View>
                     </View>
                     {this.renderPhotos.bind(this)()}
@@ -52,9 +57,16 @@ class GeneItem extends React.Component {
                                 //    <Icon name="play-arrow" size={12} color={"#0f9d58"}/>
                                 //</View>
                             }
-                            <View style={{marginLeft:2}}>
-                                <Text style={{fontSize:12,color:"#0f9d58"}}>{gene.title}</Text>
-                            </View>
+                            {
+                                type=='topic'?
+                                    <View></View>
+                                    :
+                                    <View style={{marginLeft:2}}>
+                                        <Text style={{fontSize:12,color:"#0f9d58"}}>{item.title}</Text>
+                                    </View>
+
+                            }
+
                         </View>
                         <View style={styles.infoType}>
                             <FabIcon
@@ -64,7 +76,7 @@ class GeneItem extends React.Component {
                                         color="#6d6d6d"/>
                                     }
                             />
-                            <Text style={{fontSize:12,color:'#7b7b7b',marginRight:6}}>{gene.views}</Text>
+                            <Text style={{fontSize:12,color:'#7b7b7b',marginRight:6}}>{item.views}</Text>
                         </View>
                         <View style={styles.infoType}>
                             <FabIcon
@@ -74,7 +86,7 @@ class GeneItem extends React.Component {
                                         color="#6d6d6d"/>
                                     }
                             />
-                            <Text style={styles.infoText}>{gene.rep}</Text>
+                            <Text style={styles.infoText}>{type=='topic'?item.count:item.rep}</Text>
                         </View>
                     </View>
                 </View>
@@ -84,12 +96,14 @@ class GeneItem extends React.Component {
     }
     renderPhotos(){
         var {height, width} = Dimensions.get('window');
-        var {gene} = this.props;
-        if(gene.photo){
+        var {item} = this.props;
+        var photo;
+        if((photo = item.photo) || (photo = item.thumb)){
+
             return ( <View style={[styles.photos]}>
                 <ScrollView
                     horizontal={true}>
-                    {gene.photo.split(',').map(p=> {
+                    {photo.split(',').map(p=> {
                         return (
                             <Image
                                 key={p}
@@ -103,9 +117,9 @@ class GeneItem extends React.Component {
                 </ScrollView>
             </View>)
         }
-        if(gene.plus && gene.plus.cover){
+        if(item.plus && item.plus.cover){
             return (<View style={{marginLeft:10}}>
-                    <Image source={{uri:gene.plus.cover}} style={{width:90,height:90}}/>
+                    <Image source={{uri:item.plus.cover}} style={{width:90,height:90}}/>
                     <Image style={{position:'absolute',top:-1,left:0,height:93}} esizeMode={Image.resizeMode.cover}  source={require('../assets/image/cover.png')}/>
                 </View>)
         }
@@ -178,4 +192,4 @@ const styles = StyleSheet.create({
     infoIcon: {}
 })
 
-export default GeneItem;
+export default CommonItem;

@@ -13,7 +13,7 @@ Image,
 
 } from 'react-native'
 import {getGene} from '../services/geneService'
-import GeneItem from '../components/GeneItem'
+import CommonItem from '../components/CommonItem'
 import Separator from '../components/Separator'
 import GeneStore from '../stores/GeneStore'
 import GeneAction from '../actions/GeneAction'
@@ -54,7 +54,7 @@ class GeneLayout extends Component {
                     style={{backgroundColor:'#f9f9f9'}}
                     enableEmptySections={true}
                     dataSource={dataSource}
-                    renderRow={rowData=><GeneItem gene={rowData}/>}
+                    renderRow={rowData=><CommonItem type="gene" item={rowData}/>}
                     refreshControl={
                        <RefreshControl
                          refreshing={this.props.isRefreshing}

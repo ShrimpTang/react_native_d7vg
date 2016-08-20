@@ -14,6 +14,7 @@ import TopicLayout from './src/layouts/TopicLayout'
 import GeneLayout from './src/layouts/GeneLayout'
 import UserInfo from './src/components/UserInfo'
 import NavigationView from './src/components/NavigationView'
+import WebViewLayout from './src/layouts/WebViewLayout'
 import moment from 'moment';
 import momentLocale from 'moment/locale/zh-cn';
 moment.updateLocale('zh-cn', momentLocale);
@@ -26,9 +27,9 @@ class react_native_d7vg extends Component {
             navigator: null,
             drawer: null
         }
-        BackAndroid.addEventListener('hardwareBackPress',()=>{
+        BackAndroid.addEventListener('hardwareBackPress', ()=> {
             var nav = this.state.navigator;
-            if(nav && nav.getCurrentRoutes().length>1){
+            if (nav && nav.getCurrentRoutes().length > 1) {
                 nav.pop();
                 return true;
             }
@@ -87,10 +88,13 @@ class react_native_d7vg extends Component {
     renderScene(route, navigator) {
         switch (route.name) {
             case 'topic':
-                return <TopicLayout />
+                return <TopicLayout {...route} />
                 break;
             case 'gene':
-                return <GeneLayout/>
+                return <GeneLayout {...route}/>
+                break;
+            case 'webView':
+                return <WebViewLayout {...route}/>
                 break;
         }
     }
