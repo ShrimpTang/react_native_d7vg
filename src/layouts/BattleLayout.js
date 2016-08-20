@@ -22,6 +22,7 @@ import BattleStore from '../stores/BattleStore'
 import BattleAction from '../actions/BattleAction'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import moment from 'moment'
 @connectToStores
 class BattleLayout extends Component {
 
@@ -33,7 +34,9 @@ class BattleLayout extends Component {
     // 构造
     constructor(props) {
         super(props);
-        console.log('asdfasdf')
+        this.state = {
+            day:1
+        }
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2});
     }
 
@@ -58,12 +61,18 @@ class BattleLayout extends Component {
 
 
     onActionSelected(index) {
-        console.log(1)
+        if(index==0)return;
+        this.setState({
+            day:index
+        })
     }
 
     render() {
-        if (this.props.battles.day1) {
-            var dataSource = this.ds.cloneWithRows(this.props.battles.day1)
+        if (this.props.battles) {
+            var dataSource = this.ds.cloneWithRows(this.props.battles['day'+this.state.day])
+            var date = [3,4,5,6].map(day=>{
+                return {title:moment().add(day, 'd').format('MM月DD日'),show:'never'};
+            })
             return (
                 <View style={{flex:1}}>
                     <Icon.ToolbarAndroid
@@ -75,20 +84,18 @@ class BattleLayout extends Component {
                         iconColor={'white'}
                         onActionSelected={this.onActionSelected.bind(this)}
                         actions={[
-                            {title:'全部',show:'never'},
+                              {title:'发布主题',show:'always',iconName:'add'},
+                              {title:'今天',show:'never'},
+                              {title:'明天',show:'never'},
+                              {title:'后天',show:'never'},
+                              ...date
                         ]}
                     />
                     <ListView
                         style={{backgroundColor:'#f9f9f9'}}
                         enableEmptySections={true}
                         dataSource={dataSource}
-                        renderRow={rowData=><BattleItem item={rowData}/>}
-                        refreshControl={
-                       <RefreshControl
-                         refreshing={this.props.isRefreshing}
-                         onRefresh={this.onRefresh.bind(this)}
-
-                       />}
+                        renderRow={rowData=><BattleItem navigator={this.context.navigator} item={rowData}/>}
                         renderSeparator={this.renderSeparator.bind(this)}
                     />
                 </View>

@@ -9,13 +9,12 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     Image,
-    ScrollView,
-    Dimensions
 } from 'react-native'
 import config from '../config';
 import moment from 'moment';
 import  Icon from 'react-native-vector-icons/MaterialIcons';
 import FabIcon  from './FabIcon';
+import PlatformTip from './PlatformTip';
 class BattleItem extends React.Component {
 
     // 构造
@@ -25,9 +24,9 @@ class BattleItem extends React.Component {
     }
 
     onItemPress() {
-        var {item,type,navigator} = this.props;
-        if (item && type && navigator) {
-            var uri = config.baseUrl + type + '/' + item.id;
+        var {item,navigator} = this.props;
+        if (item  && navigator) {
+            var uri = config.baseUrl + 'battle/' + item.id;
             navigator.push({
                 name: 'webView',
                 uri
@@ -45,31 +44,40 @@ class BattleItem extends React.Component {
     }
 
     render() {
-        var {item,type} = this.props;
-        var avatarUri = item.profilepicture ? item.profilepicture : config.photoUrl + item.avatar + '.png@50png';
-        var date = moment(item.date * 1000).fromNow();
+        var {item} = this.props;
+        var avatarUri = item.profilepicture ? item.profilepicture : config.photoUrl + item.avatar + '.png@55png';
+        // var date = moment(item.date * 1000).fromNow();
         return (
             <TouchableOpacity activeOpacity={.5} onPress={this.onItemPress.bind(this)}>
                 <View style={styles.container}>
-                    <View style={styles.head}>
-                        <TouchableOpacity onPress={this.avatarOnPress.bind(this)}
-                                          style={{flex:1,flexDirection:'row',alignItems:'center'}}>
-                            <Image style={styles.avatar}
-                                   source={{uri: avatarUri}}
-
-                            />
-                            <View style={{flex:1,flexDirection:'row'}}>
-                                <Text style={styles.psn_id}>{item.psnid}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <Text style={styles.date}>{date}</Text>
-                    </View>
+                    <Image
+                        resizeMode={Image.resizeMode.cover}
+                        source={{uri:config.psnGameCoverUrl+item.gid+'.png@100w.png'}}
+                        style={{height:55,width:100}}
+                    />
+                    <TouchableOpacity onPress={this.avatarOnPress.bind(this)}>
+                        <Image style={styles.avatar}
+                               source={{uri: avatarUri}}
+                        />
+                    </TouchableOpacity>
                     <View style={styles.content}>
-                        <View style={styles.title}>
-                            <Text>{item.cnname}</Text>
+                        <Text style={styles.cnname}>{item.cnname}</Text>
+                        <View style={styles.platform}>
+                            {
+                                item.platform.split(',').map(pl=> {
+                                    return <PlatformTip style={{marginRight:5}} key={pl} platform={pl}/>
+                                })
+                            }
                         </View>
+                        <Text style={styles.time}>
+                            {moment(parseInt(item.startdate)*1000).format('HH:mm')}/{item.howlong}小时
+                        </Text>
                     </View>
+                    <View style={styles.type}>
+                        <Text style={styles.typeText}>互刷</Text>
+                        <Text style={styles.typeText}>招募{item.num}人</Text>
+                    </View>
+
                 </View>
 
             </TouchableOpacity>
@@ -80,72 +88,42 @@ class BattleItem extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
-        backgroundColor: "#ffffff"
-    },
-    head: {
         flexDirection: 'row',
-        height: 50,
+        backgroundColor: "#ffffff",
+        height: 70,
         alignItems: 'center',
-        margin: 10
-        // backgroundColor:"#4FC3F7"
-    },
-    psn_id: {
-        //overflow: 'hidden',
-        fontSize: 14,
-        marginLeft: 6
-    },
-    date: {
-        fontSize: 12,
-        color: '#9e9e9e'
+        marginLeft:6,
+        marginRight:6
     },
     avatar: {
-        width: 40,
-        height: 40,
-        borderRadius: 50
-        //backgroundColor: '#ff00aa',
+        width: 55,
+        height: 55,
+        marginLeft:12
     },
-    content: {
-        flex: 1,
-        flexDirection: 'column',
-        marginLeft: 10,
-        marginRight: 10,
-        marginBottom: 10
+    content:{
+        flexDirection:'column',
+        marginLeft:7,
+        flex:1
     },
-    title: {
-        flexWrap: 'wrap',
-        flex: 1,
-    },
-    photos: {
-        flexDirection: 'row',
-        marginLeft: 10,
-        marginRight: 10
+    cnname:{
+        fontSize:12,
+        marginBottom:4
 
     },
-    info: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-        marginRight: 8,
-        marginLeft: 8
+    platform:{
+        flexDirection:'row',
+        marginBottom:4
     },
-    infoText: {
-        fontSize: 12,
-        color: '#7b7b7b',
-        marginRight: 6
+    time:{
+        fontSize:12
     },
-    infoType: {
-        justifyContent: 'flex-end',
-        flexDirection: 'row',
-        alignItems: 'center',
-
+    type:{
+        flexDirection:'column'
     },
-    infoIcon: {},
-    movieText: {
-        color: '#969696',
-        fontSize: 12,
-        flex: 1
+    typeText:{
+        color:'#B8C4CE',
+        fontSize:12,
+        textAlign:'right'
     }
 })
 
