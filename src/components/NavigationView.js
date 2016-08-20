@@ -49,7 +49,7 @@ class NavigationView extends Component {
                 <NavigationItem {...this.context} name="topic" displayName="社区" iconName="home"/>
                 <NavigationItem {...this.context} name="game" displayName="游戏" iconName="videogame-asset"/>
                 <NavigationItem {...this.context} name="store" displayName="Store" iconName="store"/>
-                <NavigationItem {...this.context} name="group" displayName="约战" iconName="group"/>
+                <NavigationItem {...this.context} name="battle" displayName="约战" iconName="group"/>
                 <NavigationItem {...this.context} name="gene" displayName="机因" iconName="public"/>
                 <NavigationItem {...this.context} name="settings" displayName="设置" iconName="settings"/>
             </ScrollView>

@@ -15,6 +15,7 @@ import GeneLayout from './src/layouts/GeneLayout'
 import UserInfo from './src/components/UserInfo'
 import NavigationView from './src/components/NavigationView'
 import WebViewLayout from './src/layouts/WebViewLayout'
+import BattleLayout from './src/layouts/BattleLayout'
 import moment from 'moment';
 import momentLocale from 'moment/locale/zh-cn';
 moment.updateLocale('zh-cn', momentLocale);
@@ -38,14 +39,12 @@ class react_native_d7vg extends Component {
     }
 
     setNavigator(nav) {
-        console.log(nav)
         this.setState({
             navigator: nav
         })
     }
 
     setDrawer(drawer) {
-        console.log(drawer)
         this.setState({
             drawer
         })
@@ -98,6 +97,9 @@ class react_native_d7vg extends Component {
                 break;
             case 'userInfo':
                 return <UserInfo {...route}/>
+                break;
+            case 'battle':
+                return <BattleLayout {...route}/>
                 break;
         }
     }
