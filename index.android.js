@@ -37,12 +37,14 @@ class react_native_d7vg extends Component {
     }
 
     setNavigator(nav) {
+        console.log(nav)
         this.setState({
             navigator: nav
         })
     }
 
     setDrawer(drawer) {
+        console.log(drawer)
         this.setState({
             drawer
         })
@@ -83,7 +85,6 @@ class react_native_d7vg extends Component {
     }
 
     renderScene(route, navigator) {
-        console.log(route,navigator)
         switch (route.name) {
             case 'topic':
                 return <TopicLayout />
