@@ -6,5 +6,6 @@ export default {
     photoUrl: 'http://photo.d7vg.com/avatar/',
     imgUrl: 'http://ww4.sinaimg.cn/thumb150/',
     flagUrl:'http://psnine.com/Upload/flag/',//国旗
-    psnGameCoverUrl:'http://photo.d7vg.com/psngame/'
+    psnGameCoverUrl:'http://photo.d7vg.com/psngame/',
+    movieCover:'https://img3.doubanio.com/view/movie_poster_cover/lpst/public/'
 }

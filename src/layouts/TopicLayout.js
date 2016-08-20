@@ -21,6 +21,7 @@ import CommonItem from '../components/CommonItem'
 @connectToStores
 class TopicLayout extends Component {
     static contextTypes = {
+        navigator: React.PropTypes.object,
         drawer: React.PropTypes.object
     };
 
@@ -121,7 +122,7 @@ class TopicLayout extends Component {
                         style={{backgroundColor:'#f9f9f9'}}
                         enableEmptySections={true}
                         dataSource={dataSource}
-                        renderRow={rowData=><CommonItem type="topic" item={rowData}/>}
+                        renderRow={rowData=><CommonItem navigator={this.context.navigator} type="topic" item={rowData}/>}
                         refreshControl={
                        <RefreshControl
                          refreshing={this.props.isRefreshing}

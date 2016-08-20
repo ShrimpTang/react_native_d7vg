@@ -96,6 +96,9 @@ class react_native_d7vg extends Component {
             case 'webView':
                 return <WebViewLayout {...route}/>
                 break;
+            case 'userInfo':
+                return <UserInfo {...route}/>
+                break;
         }
     }
 }

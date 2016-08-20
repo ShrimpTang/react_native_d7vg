@@ -4,15 +4,21 @@ import config from '../config';
 
 class UserDetail extends Component {
     render() {
-        var {user,width=100} = this.props;
+        var {user,width=100,type} = this.props;
+        var style={};
+        if(type=='game'){
+            style.height = 150;
+        }
         var avatarUri = user.profilepicture ? user.profilepicture : config.photoUrl + user.avatar + '.png@' + width + 'w.png';
         return (
-            <View style={styles.userInfoContainer}>
+            <View style={[styles.userInfoContainer,style]}>
                 <View style={{flexDirection:'column',flex:1}}>
-            <View style={{flexDirection:'row',margin:16,marginBottom:4}}>
+            <View style={{flexDirection:'row',margin:12,marginBottom:4}}>
             <Image source={{uri:avatarUri}} style={{width,height:width,borderRadius: 50}}/>
             <View style={{flexDirection:'column',justifyContent:'center',marginLeft:8}}>
-                <Text style={{color:'white',fontWeight:'bold',fontSize:18}}>{user.psnid}</Text>
+                {
+                    type=='game'?<Text></Text>:<Text style={{color:'white',fontWeight:'bold',fontSize:18}}>{user.psnid}</Text>
+                }
                 <View style={{flexDirection:'row',marginTop:5}}>
                     {this.getIcons()}
                 </View>

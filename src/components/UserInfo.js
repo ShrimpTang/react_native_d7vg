@@ -10,7 +10,8 @@ import {
     StyleSheet,
     Dimensions,
     ListView,
-    ScorllView
+    ScorllView,
+    ToastAndroid
 }
     from 'react-native';
 import PlatformTip from './PlatformTip';
@@ -18,6 +19,7 @@ import RatioBar from './RatioBar';
 import Separator from './Separator';
 import UserDetail from './UserDetail'
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const userGame = [{
     "gid": "11345",
@@ -291,22 +293,51 @@ const user = {
     "datadate": "1471274649"
 };
 class UserInfo extends Component {
+    static contextTypes = {
+        navigator: React.PropTypes.object,
+        drawer: React.PropTypes.object
+    };
+
     constructor(props){
         super(props)
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2});
     }
+    onIconClicked() {
+        if (this.context.drawer) {
+            this.context.drawer.openDrawer();
+        }
+    }
+
+    onActionSelected(index) {
+        ToastAndroid.show('并不能同步',ToastAndroid.SHORT)
+    }
+
     render() {
         var dataSource = this.ds.cloneWithRows(userGame);
 
         return (
+            <View style={{flex:1}}>
+                <Icon.ToolbarAndroid
+                    style={{height:56,backgroundColor:"#1565C0"}}
+                    title={user.psnid}
+                    titleColor="#fff"
+                    navIconName="menu"
+                    onIconClicked={this.onIconClicked.bind(this)}
+                    iconColor={'white'}
+                    onActionSelected={this.onActionSelected.bind(this)}
+                    actions={[
+                             {title:'同步',show:'always',iconName:'refresh'}
+                        ]}
+                />
+                <ListView
+                    renderSeparator={this.renderSeparator.bind(this)}
+                    style={{flex:1}}
+                    dataSource={dataSource}
+                    renderRow={rowData=>{return <GameItem key={rowData.gid} game={rowData}/>}}
+                    renderHeader={()=><UserDetail user={user} width={70} type="game"/>}
+                />
 
-                  <ListView
-                      renderSeparator={this.renderSeparator.bind(this)}
-                      style={{flex:1}}
-                      dataSource={dataSource}
-                      renderRow={rowData=>{return <GameItem key={rowData.gid} game={rowData}/>}}
-                      renderHeader={()=><UserDetail user={user} type="game"/>}
-                  />
+            </View>
         )
         //(<Image
         //    resizeMode={Image.resizeMode.cover}
@@ -326,7 +357,7 @@ class UserInfo extends Component {
 const GameItem = (props) =>{
     var game = props.game;
     var date = moment(game.date * 1000).fromNow();
-    return <View style={{height:70,flexDirection:'row',alignItems:'center',marginLeft:5,marginRight:5}}>
+    return <View style={{height:70,flexDirection:'row',alignItems:'center',marginLeft:5,marginRight:5,backgroundColor:'white'}}>
         <Image
             resizeMode={Image.resizeMode.cover}
             source={{uri:config.psnGameCoverUrl+game.gid+'.png@100w.png'}}

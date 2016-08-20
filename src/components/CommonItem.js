@@ -24,24 +24,49 @@ class CommonItem extends React.Component {
         // 初始状态
     }
 
+    onItemPress() {
+        var {item,type,navigator} = this.props;
+        if (item && type && navigator) {
+            var uri = config.baseUrl + type + '/' + item.id;
+            navigator.push({
+                name: 'webView',
+                uri
+            })
+        }
+    }
+
+    avatarOnPress(){
+        var {navigator} = this.props;
+        if(navigator){
+            navigator.push({
+                name: 'userInfo',
+            })
+        }
+    }
+
     render() {
         var {item,type} = this.props;
-        if(type=='topic'){
+        if (type == 'topic') {
             item.$$preview = item.title;
-        }else{
+        } else {
             item.$$preview = item.content;
         }
         var avatarUri = item.profilepicture ? item.profilepicture : config.photoUrl + item.avatar + '.png@50png';
         var date = moment(item.date * 1000).fromNow();
         return (
-            <View activeOpacity={.5}>
+            <TouchableOpacity activeOpacity={.5} onPress={this.onItemPress.bind(this)}>
                 <View style={styles.container}>
                     <View style={styles.head}>
-                        <Image style={styles.avatar}
-                               source={{uri: avatarUri}}/>
-                        <View style={{flex:1,flexDirection:'row'}}>
-                            <Text style={styles.psn_id}>{item.psnid}</Text>
-                        </View>
+                        <TouchableOpacity onPress={this.avatarOnPress.bind(this)} style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                            <Image style={styles.avatar}
+                                   source={{uri: avatarUri}}
+
+                            />
+                            <View style={{flex:1,flexDirection:'row'}}>
+                                <Text style={styles.psn_id}>{item.psnid}</Text>
+                            </View>
+                        </TouchableOpacity>
+
                         <Text style={styles.date}>{date}</Text>
                     </View>
                     <View style={styles.content}>
@@ -58,7 +83,7 @@ class CommonItem extends React.Component {
                                 //</View>
                             }
                             {
-                                type=='topic'?
+                                type == 'topic' ?
                                     <View></View>
                                     :
                                     <View style={{marginLeft:2}}>
@@ -86,24 +111,26 @@ class CommonItem extends React.Component {
                                         color="#6d6d6d"/>
                                     }
                             />
-                            <Text style={styles.infoText}>{type=='topic'?item.count:item.rep}</Text>
+                            <Text style={styles.infoText}>{type == 'topic' ? item.count : item.rep}</Text>
                         </View>
                     </View>
                 </View>
 
-            </View>
+            </TouchableOpacity>
         )
     }
-    renderPhotos(){
+
+    renderPhotos() {
         var {height, width} = Dimensions.get('window');
         var {item} = this.props;
         var photo;
-        if((photo = item.photo) || (photo = item.thumb)){
+        if ((photo = item.photo) || (photo = item.thumb)) {
 
             return ( <View style={[styles.photos]}>
                 <ScrollView
                     horizontal={true}>
-                    {photo.split(',').map(p=> {
+                    {photo.split(',').map((p, i)=> {
+                        if (i > 2)return;
                         return (
                             <Image
                                 key={p}
@@ -117,11 +144,37 @@ class CommonItem extends React.Component {
                 </ScrollView>
             </View>)
         }
-        if(item.plus && item.plus.cover){
-            return (<View style={{marginLeft:10}}>
-                    <Image source={{uri:item.plus.cover}} style={{width:90,height:90}}/>
-                    <Image style={{position:'absolute',top:-1,left:0,height:93}} esizeMode={Image.resizeMode.cover}  source={require('../assets/image/cover.png')}/>
+        if (item.plus) {
+            if (item.plus.cover && item.type == 'music') {
+                return (<View style={{marginLeft:10}}>
+                    <Image source={{uri:item.plus.cover}} style={{width:119,height:119}}/>
+                    <Image style={{position:'absolute',top:-1,left:0}}
+                           esizeMode={Image.resizeMode.cover}
+                           source={require('../assets/image/cover.png')}/>
                 </View>)
+            }
+            if (item.type == 'movie' && item.plus.cover) {
+                var plus = item.plus;
+                return (
+                    <View style={{marginLeft:10,flexDirection:'row'}}>
+                        <Image style={{width:80,height:120}} source={{uri:config.movieCover+plus.cover}}/>
+                        <View style={{flexDirection:'column',marginLeft:10}}>
+                                <Text style={styles.movieText}>{plus.title}</Text>
+                                <Text style={[styles.movieText,{color:'#F44336'}]}>{plus.rate}分</Text>
+                                <Text style={styles.movieText}>{plus.pubdate}/{plus.durations}</Text>
+                                <Text style={styles.movieText}>{plus.countries}</Text>
+                                <Text style={styles.movieText}>{plus.genres}</Text>
+
+                        </View>
+                    </View>
+                )
+            }
+            if (item.plus.img) {
+                return (<View style={{marginLeft:10}}>
+                    <Image source={{uri:item.plus.img}} style={{width:160,height:90}}/>
+                </View>)
+            }
+
         }
     }
 }
@@ -166,8 +219,8 @@ const styles = StyleSheet.create({
     },
     photos: {
         flexDirection: 'row',
-        marginLeft:10,
-        marginRight:10
+        marginLeft: 10,
+        marginRight: 10
 
     },
     info: {
@@ -189,7 +242,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
-    infoIcon: {}
+    infoIcon: {},
+    movieText:{
+        color:'#969696',
+        fontSize:12,
+        flex:1
+    }
 })
 
 export default CommonItem;
