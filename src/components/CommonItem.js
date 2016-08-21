@@ -17,6 +17,9 @@ import moment from 'moment';
 import  Icon from 'react-native-vector-icons/MaterialIcons';
 import FabIcon  from './FabIcon';
 class CommonItem extends React.Component {
+    static defaultProps = {
+        type: 'gene'
+    };
 
     // 构造
     constructor(props) {
@@ -26,6 +29,10 @@ class CommonItem extends React.Component {
 
     onItemPress() {
         var {item,type,navigator} = this.props;
+        if(type=='group'){
+            type='gene'
+        }
+        console.log(item,type)
         if (item && type && navigator) {
             var uri = config.baseUrl + type + '/' + item.id;
             navigator.push({
@@ -83,13 +90,12 @@ class CommonItem extends React.Component {
                                 //</View>
                             }
                             {
-                                type == 'topic' ?
-                                    <View></View>
-                                    :
-                                    <View style={{marginLeft:2}}>
+                                type == 'gene' ?
+                                    <TouchableOpacity onPress={this.props.geneGroupPress.bind(this.props.context,item)} style={{marginLeft:2}}>
                                         <Text style={{fontSize:12,color:"#0f9d58"}}>{item.title}</Text>
-                                    </View>
-
+                                    </TouchableOpacity>
+                                    :
+                                    <View></View>
                             }
 
                         </View>

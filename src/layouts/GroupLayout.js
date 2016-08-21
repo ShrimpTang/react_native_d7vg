@@ -12,15 +12,16 @@ import {
     Dimensions
 
 } from 'react-native'
-import {getGene} from '../services/geneService'
+import {getGroup} from '../services/groupService'
 import CommonItem from '../components/CommonItem'
 import Separator from '../components/Separator'
-import GeneStore from '../stores/GeneStore'
-import GeneAction from '../actions/GeneAction'
+import GroupStore from '../stores/GroupStore'
+import GroupAction from '../actions/GroupAction'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import config from '../config'
 @connectToStores
-class GeneLayout extends Component {
+class GroupLayout extends Component {
 
     static contextTypes = {
         navigator: React.PropTypes.object,
@@ -30,18 +31,15 @@ class GeneLayout extends Component {
     // 构造
     constructor(props) {
         super(props);
-        this.state={
-            type:'all'
-        }
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2});
     }
 
     componentDidMount() {
-        GeneAction.getGenes({page:1,type:this.state.type})
+        GroupAction.getGroups({page:1,groupid:this.props.groupid})
     }
 
     onRefresh() {
-        GeneAction.getGenes({page:1,type:this.state.type})
+        GroupAction.getGroups({page:1,groupid:this.props.groupid})
     }
 
     renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
@@ -49,7 +47,7 @@ class GeneLayout extends Component {
     }
 
     onEndReached() {
-        GeneAction.getGenes({page: this.props.page+1,type:this.state.type})
+        GroupAction.getGroups({page: this.props.page+1,groupid:this.props.groupid})
     }
 
     onIconClicked() {
@@ -60,57 +58,40 @@ class GeneLayout extends Component {
 
 
     onActionSelected(index) {
-        var type = 'all';
-        switch (index) {
-            case 1:
-                type = 'photo';
-                break;
-            case 2:
-                type = 'music';
-                break;
-            case 3:
-                type = 'movie';
-                break;
-            case 4:
-                type = 'video';
-                break;
+      var navigator   = this.context.navigator;
+        if(navigator){
+            navigator.push({
+                name:'webView',
+                uri:config.baseUrl+'group/'+this.props.groupid+'/info'
+            })
         }
-        this.setState({
-            type
-        })
-        GeneAction.getGenes({page: 1, type})
     }
 
-    geneGroupPress(item){
+    groupGroupPress(item){
         var  navigator = this.context.navigator;
         if(navigator && item){
             navigator.push({
                 name:'group',
-                groupid:item.groupid,
-                groupName:item.title
+                groupid:item.groupid
             })
         }
     }
 
     render() {
-        if (this.props.genes.length > 0) {
-            var dataSource = this.ds.cloneWithRows(this.props.genes)
+        if (this.props.groups.length > 0) {
+            var dataSource = this.ds.cloneWithRows(this.props.groups)
             return (
                 <View style={{flex:1}}>
                     <Icon.ToolbarAndroid
                         style={{height:56,backgroundColor:"#2196F3"}}
-                        title="机因"
+                        title={this.props.groupName}
                         titleColor="#fff"
                         navIconName="menu"
                         onIconClicked={this.onIconClicked.bind(this)}
                         iconColor={'white'}
                         onActionSelected={this.onActionSelected.bind(this)}
                         actions={[
-                            {title:'全部',show:'never'},
-                            {title:'图文类',show:'never'},
-                            {title:'音乐类',show:'never'},
-                            {title:'影视类',show:'never'},
-                            {title:'视屏类',show:'never'},
+                            {title:'说明',show:'always',iconName:'forum'},
 
                         ]}
                     />
@@ -118,7 +99,7 @@ class GeneLayout extends Component {
                         style={{backgroundColor:'#f9f9f9'}}
                         enableEmptySections={true}
                         dataSource={dataSource}
-                        renderRow={rowData=><CommonItem type="gene" context={this} navigator={this.context.navigator} item={rowData} geneGroupPress={this.geneGroupPress}/>}
+                        renderRow={rowData=><CommonItem type="group" context={this} navigator={this.context.navigator} item={rowData} groupGroupPress={this.groupGroupPress}/>}
                         refreshControl={
                        <RefreshControl
                          refreshing={this.props.isRefreshing}
@@ -139,12 +120,12 @@ class GeneLayout extends Component {
     }
 
     static getStores(props) {
-        return [GeneStore]
+        return [GroupStore]
     }
 
     static getPropsFromStores(props) {
-        return GeneStore.getState()
+        return GroupStore.getState()
     }
 }
 
-export default GeneLayout;
+export default GroupLayout;

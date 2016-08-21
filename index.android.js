@@ -16,6 +16,7 @@ import UserInfo from './src/components/UserInfo'
 import NavigationView from './src/components/NavigationView'
 import WebViewLayout from './src/layouts/WebViewLayout'
 import BattleLayout from './src/layouts/BattleLayout'
+import GroupLayout from './src/layouts/GroupLayout'
 import moment from 'moment';
 import momentLocale from 'moment/locale/zh-cn';
 moment.updateLocale('zh-cn', momentLocale);
@@ -100,6 +101,9 @@ class react_native_d7vg extends Component {
                 break;
             case 'battle':
                 return <BattleLayout {...route}/>
+                break;
+            case 'group':
+                return <GroupLayout {...route}/>
                 break;
         }
     }

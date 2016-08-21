@@ -68,7 +68,7 @@ class BattleLayout extends Component {
     }
 
     render() {
-        if (this.props.battles) {
+        if (this.props.battles['day'+this.state.day]) {
             var dataSource = this.ds.cloneWithRows(this.props.battles['day'+this.state.day])
             var date = [3,4,5,6].map(day=>{
                 return {title:moment().add(day, 'd').format('MM月DD日'),show:'never'};

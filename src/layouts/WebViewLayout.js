@@ -21,9 +21,9 @@ class WebViewLayout extends Component {
                     navIconName="menu"
                     iconColor={'white'}
                     actions={[
-                            {title:'收藏',show:'always',iconName:'star-border'},
-                            {title:'感谢',show:'always',iconName:'favorite-border'},
-                            {title:'回复',show:'always',iconName:'reply'},
+                            //{title:'收藏',show:'always',iconName:'star-border'},
+                            //{title:'感谢',show:'always',iconName:'favorite-border'},
+                            //{title:'回复',show:'always',iconName:'reply'},
                         ]}
                 />
                 <WebView source={{uri:this.props.uri}}/>
