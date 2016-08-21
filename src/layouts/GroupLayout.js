@@ -35,11 +35,11 @@ class GroupLayout extends Component {
     }
 
     componentDidMount() {
-        GroupAction.getGroups({page:1,groupid:this.props.groupid})
+        GroupAction.getGroups({page: 1, groupid: this.props.groupid})
     }
 
     onRefresh() {
-        GroupAction.getGroups({page:1,groupid:this.props.groupid})
+        GroupAction.getGroups({page: 1, groupid: this.props.groupid})
     }
 
     renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
@@ -47,7 +47,7 @@ class GroupLayout extends Component {
     }
 
     onEndReached() {
-        GroupAction.getGroups({page: this.props.page+1,groupid:this.props.groupid})
+        GroupAction.getGroups({page: this.props.page + 1, groupid: this.props.groupid})
     }
 
     onIconClicked() {
@@ -58,64 +58,66 @@ class GroupLayout extends Component {
 
 
     onActionSelected(index) {
-      var navigator   = this.context.navigator;
-        if(navigator){
+        var navigator = this.context.navigator;
+        if (navigator) {
             navigator.push({
-                name:'webView',
-                uri:config.baseUrl+'group/'+this.props.groupid+'/info'
+                name: 'webView',
+                uri: config.baseUrl + 'group/' + this.props.groupid + '/info'
             })
         }
     }
 
-    groupGroupPress(item){
-        var  navigator = this.context.navigator;
-        if(navigator && item){
+    groupGroupPress(item) {
+        var navigator = this.context.navigator;
+        if (navigator && item) {
             navigator.push({
-                name:'group',
-                groupid:item.groupid
+                name: 'group',
+                groupid: item.groupid
             })
         }
     }
 
     render() {
+        var dataSource;
         if (this.props.groups.length > 0) {
-            var dataSource = this.ds.cloneWithRows(this.props.groups)
-            return (
-                <View style={{flex:1}}>
-                    <Icon.ToolbarAndroid
-                        style={{height:56,backgroundColor:"#2196F3"}}
-                        title={this.props.groupName}
-                        titleColor="#fff"
-                        navIconName="menu"
-                        onIconClicked={this.onIconClicked.bind(this)}
-                        iconColor={'white'}
-                        onActionSelected={this.onActionSelected.bind(this)}
-                        actions={[
+            dataSource = this.ds.cloneWithRows(this.props.groups)
+        } else {
+            dataSource = this.ds.cloneWithRows([])
+        }
+
+        return (
+            <View style={{flex:1}}>
+                <Icon.ToolbarAndroid
+                    style={{height:56,backgroundColor:"#2196F3"}}
+                    title={this.props.groupName}
+                    titleColor="#fff"
+                    navIconName="menu"
+                    onIconClicked={this.onIconClicked.bind(this)}
+                    iconColor={'white'}
+                    onActionSelected={this.onActionSelected.bind(this)}
+                    actions={[
                             {title:'说明',show:'always',iconName:'forum'},
 
                         ]}
-                    />
-                    <ListView
-                        style={{backgroundColor:'#f9f9f9'}}
-                        enableEmptySections={true}
-                        dataSource={dataSource}
-                        renderRow={rowData=><CommonItem type="group" context={this} navigator={this.context.navigator} item={rowData} groupGroupPress={this.groupGroupPress}/>}
-                        refreshControl={
+                />
+                <ListView
+                    style={{backgroundColor:'#f9f9f9'}}
+                    enableEmptySections={true}
+                    dataSource={dataSource}
+                    renderRow={rowData=><CommonItem type="group" context={this} navigator={this.context.navigator} item={rowData} groupGroupPress={this.groupGroupPress}/>}
+                    refreshControl={
                        <RefreshControl
                          refreshing={this.props.isRefreshing}
                          onRefresh={this.onRefresh.bind(this)}
+                         colors={['#1976D2','#1976D2','#BBDEFB']}
 
                        />}
-                        renderSeparator={this.renderSeparator.bind(this)}
-                        onEndReached={this.onEndReached.bind(this)}
-                        onEndReachedThreshold={10}
-                    />
-                </View>
-
-            );
-        } else {
-            return <Separator/>
-        }
+                    renderSeparator={this.renderSeparator.bind(this)}
+                    onEndReached={this.onEndReached.bind(this)}
+                    onEndReachedThreshold={10}
+                />
+            </View>
+        );
 
     }
 

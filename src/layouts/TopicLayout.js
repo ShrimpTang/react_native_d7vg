@@ -36,11 +36,11 @@ class TopicLayout extends Component {
     }
 
     componentDidMount() {
-        TopicAction.getTopics({page: 1,node:this.state.node})
+        TopicAction.getTopics({page: 1, node: this.state.node})
     }
 
     onRefresh() {
-        TopicAction.getTopics({page: 1,node:this.state.node})
+        TopicAction.getTopics({page: 1, node: this.state.node})
     }
 
     renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
@@ -48,7 +48,7 @@ class TopicLayout extends Component {
     }
 
     onEndReached() {
-        TopicAction.getTopics({page: this.props.page + 1,node:this.state.node})
+        TopicAction.getTopics({page: this.props.page + 1, node: this.state.node})
     }
 
     onIconClicked() {
@@ -92,19 +92,25 @@ class TopicLayout extends Component {
     }
 
     render() {
+        var dataSource;
         if (this.props.topics.length > 0) {
-            var dataSource = this.ds.cloneWithRows(this.props.topics)
-            return (
-                <View style={{flex:1}}>
-                    <Icon.ToolbarAndroid
-                        style={{height:56,backgroundColor:"#2196F3"}}
-                        title="社区"
-                        titleColor="#fff"
-                        navIconName="menu"
-                        onIconClicked={this.onIconClicked.bind(this)}
-                        iconColor={'white'}
-                        onActionSelected={this.onActionSelected.bind(this)}
-                        actions={[
+            dataSource = this.ds.cloneWithRows(this.props.topics)
+        } else {
+            dataSource = this.ds.cloneWithRows([])
+        }
+
+
+        return (
+            <View style={{flex:1}}>
+                <Icon.ToolbarAndroid
+                    style={{height:56,backgroundColor:"#2196F3"}}
+                    title="社区"
+                    titleColor="#fff"
+                    navIconName="menu"
+                    onIconClicked={this.onIconClicked.bind(this)}
+                    iconColor={'white'}
+                    onActionSelected={this.onActionSelected.bind(this)}
+                    actions={[
                             {title:'全部',show:'never'},
                             {title:'新闻',show:'never'},//news
                             {title:'攻略',show:'never'},// guide
@@ -117,29 +123,25 @@ class TopicLayout extends Component {
                             {title:'活动',show:'never'},//event
 
                         ]}
-                    />
-                    <ListView
-                        style={{backgroundColor:'#f9f9f9'}}
-                        enableEmptySections={true}
-                        dataSource={dataSource}
-                        renderRow={rowData=><CommonItem navigator={this.context.navigator} type="topic" item={rowData}/>}
-                        refreshControl={
-                       <RefreshControl
-                         refreshing={this.props.isRefreshing}
-                         onRefresh={this.onRefresh.bind(this)}
+                />
+                <ListView
+                    style={{backgroundColor:'#f9f9f9'}}
+                    enableEmptySections={true}
+                    dataSource={dataSource}
+                    renderRow={rowData=><CommonItem navigator={this.context.navigator} type="topic" item={rowData}/>}
+                    refreshControl={
+            <RefreshControl
+                refreshing={this.props.isRefreshing}
+                onRefresh={this.onRefresh.bind(this)}
+                colors={['#1976D2','#1976D2','#BBDEFB']}
+            />}
+                    renderSeparator={this.renderSeparator.bind(this)}
+                    onEndReached={this.onEndReached.bind(this)}
+                    onEndReachedThreshold={10}
+                />
 
-                       />}
-                        renderSeparator={this.renderSeparator.bind(this)}
-                        onEndReached={this.onEndReached.bind(this)}
-                        onEndReachedThreshold={10}
-                    />
-
-                </View>
-
-            );
-        } else {
-            return <Separator/>
-        }
+            </View>
+        );
 
     }
 

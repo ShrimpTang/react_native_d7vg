@@ -9,14 +9,14 @@ import {
     from 'react-native'
 class Separator extends  Component{
     render(){
-        return <View style={styles.separator}></View>
+        return <View   style={styles.separator}></View>
     }
 }
 export default Separator;
 
 const styles = StyleSheet.create({
     separator:{
-        height:10,
+        height:1,
         flex:1,
         backgroundColor:'#E4E4E4',
     }

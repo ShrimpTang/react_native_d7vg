@@ -30,18 +30,18 @@ class GeneLayout extends Component {
     // 构造
     constructor(props) {
         super(props);
-        this.state={
-            type:'all'
+        this.state = {
+            type: 'all'
         }
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2});
     }
 
     componentDidMount() {
-        GeneAction.getGenes({page:1,type:this.state.type})
+        GeneAction.getGenes({page: 1, type: this.state.type})
     }
 
     onRefresh() {
-        GeneAction.getGenes({page:1,type:this.state.type})
+        GeneAction.getGenes({page: 1, type: this.state.type})
     }
 
     renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
@@ -49,7 +49,7 @@ class GeneLayout extends Component {
     }
 
     onEndReached() {
-        GeneAction.getGenes({page: this.props.page+1,type:this.state.type})
+        GeneAction.getGenes({page: this.props.page + 1, type: this.state.type})
     }
 
     onIconClicked() {
@@ -81,31 +81,37 @@ class GeneLayout extends Component {
         GeneAction.getGenes({page: 1, type})
     }
 
-    geneGroupPress(item){
-        var  navigator = this.context.navigator;
-        if(navigator && item){
+    geneGroupPress(item) {
+        var navigator = this.context.navigator;
+        if (navigator && item) {
             navigator.push({
-                name:'group',
-                groupid:item.groupid,
-                groupName:item.title
+                name: 'group',
+                groupid: item.groupid,
+                groupName: item.title
             })
         }
     }
 
     render() {
+        var dataSource;
         if (this.props.genes.length > 0) {
-            var dataSource = this.ds.cloneWithRows(this.props.genes)
-            return (
-                <View style={{flex:1}}>
-                    <Icon.ToolbarAndroid
-                        style={{height:56,backgroundColor:"#2196F3"}}
-                        title="机因"
-                        titleColor="#fff"
-                        navIconName="menu"
-                        onIconClicked={this.onIconClicked.bind(this)}
-                        iconColor={'white'}
-                        onActionSelected={this.onActionSelected.bind(this)}
-                        actions={[
+            dataSource = this.ds.cloneWithRows(this.props.genes)
+        }else{
+            dataSource = this.ds.cloneWithRows([])
+        }
+
+
+        return (
+            <View style={{flex:1}}>
+                <Icon.ToolbarAndroid
+                    style={{height:56,backgroundColor:"#2196F3"}}
+                    title="机因"
+                    titleColor="#fff"
+                    navIconName="menu"
+                    onIconClicked={this.onIconClicked.bind(this)}
+                    iconColor={'white'}
+                    onActionSelected={this.onActionSelected.bind(this)}
+                    actions={[
                             {title:'全部',show:'never'},
                             {title:'图文类',show:'never'},
                             {title:'音乐类',show:'never'},
@@ -113,28 +119,26 @@ class GeneLayout extends Component {
                             {title:'视屏类',show:'never'},
 
                         ]}
-                    />
-                    <ListView
-                        style={{backgroundColor:'#f9f9f9'}}
-                        enableEmptySections={true}
-                        dataSource={dataSource}
-                        renderRow={rowData=><CommonItem type="gene" context={this} navigator={this.context.navigator} item={rowData} geneGroupPress={this.geneGroupPress}/>}
-                        refreshControl={
+                />
+                <ListView
+                    style={{backgroundColor:'#f9f9f9'}}
+                    enableEmptySections={true}
+                    dataSource={dataSource}
+                    renderRow={rowData=><CommonItem type="gene" context={this} navigator={this.context.navigator} item={rowData} geneGroupPress={this.geneGroupPress}/>}
+                    refreshControl={
                        <RefreshControl
                          refreshing={this.props.isRefreshing}
                          onRefresh={this.onRefresh.bind(this)}
+                         colors={['#1976D2','#1976D2','#BBDEFB']}
 
                        />}
-                        renderSeparator={this.renderSeparator.bind(this)}
-                        onEndReached={this.onEndReached.bind(this)}
-                        onEndReachedThreshold={10}
-                    />
-                </View>
+                    renderSeparator={this.renderSeparator.bind(this)}
+                    onEndReached={this.onEndReached.bind(this)}
+                    onEndReachedThreshold={10}
+                />
+            </View>
 
-            );
-        } else {
-            return <Separator/>
-        }
+        );
 
     }
 

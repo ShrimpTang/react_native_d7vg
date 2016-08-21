@@ -10,7 +10,8 @@ import {
     TouchableHighlight,
     Image,
     ScrollView,
-    Dimensions
+    Dimensions,
+    TouchableNativeFeedback
 } from 'react-native'
 import config from '../config';
 import moment from 'moment';
@@ -61,8 +62,9 @@ class CommonItem extends React.Component {
         var avatarUri = item.profilepicture ? item.profilepicture : config.photoUrl + item.avatar + '.png@50png';
         var date = moment(item.date * 1000).fromNow();
         return (
-            <TouchableOpacity activeOpacity={.5} onPress={this.onItemPress.bind(this)}>
-                <View style={styles.container}>
+            <View>
+                <TouchableNativeFeedback  onPress={this.onItemPress.bind(this)}  style={styles.container}>
+                    <View>
                     <View style={styles.head}>
                         <TouchableOpacity onPress={this.avatarOnPress.bind(this)} style={{flex:1,flexDirection:'row',alignItems:'center'}}>
                             <Image style={styles.avatar}
@@ -120,9 +122,9 @@ class CommonItem extends React.Component {
                             <Text style={styles.infoText}>{type == 'topic' ? item.count : item.rep}</Text>
                         </View>
                     </View>
-                </View>
-
-            </TouchableOpacity>
+                    </View>
+                </TouchableNativeFeedback>
+            </View>
         )
     }
 
@@ -188,7 +190,8 @@ class CommonItem extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        flex:1,
     },
     head: {
         flexDirection: 'row',

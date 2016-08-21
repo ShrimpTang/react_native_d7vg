@@ -11,7 +11,8 @@ import {
     Dimensions,
     ListView,
     ScorllView,
-    ToastAndroid
+    ToastAndroid,
+    TouchableNativeFeedback
 }
     from 'react-native';
 import PlatformTip from './PlatformTip';
@@ -357,7 +358,8 @@ class UserInfo extends Component {
 const GameItem = (props) =>{
     var game = props.game;
     var date = moment(game.date * 1000).fromNow();
-    return <View style={{height:70,flexDirection:'row',alignItems:'center',marginLeft:5,marginRight:5,backgroundColor:'white'}}>
+    return <TouchableNativeFeedback >
+        <View style={{height:70,flexDirection:'row',alignItems:'center',marginLeft:5,marginRight:5,backgroundColor:'white'}}>
         <Image
             resizeMode={Image.resizeMode.cover}
             source={{uri:config.psnGameCoverUrl+game.gid+'.png@100w.png'}}
@@ -377,7 +379,8 @@ const GameItem = (props) =>{
         <View style={{alignSelf:'flex-end',paddingBottom:10,}}>
             <RatioBar ratio={game.ratio}/>
         </View>
-    </View>}
+        </View>
+    </TouchableNativeFeedback>}
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column'
