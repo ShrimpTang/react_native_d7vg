@@ -97,6 +97,7 @@ class react_native_d7vg extends Component {
                         initialRoute={{name:'topic'}}
                         renderScene={this.renderScene}
                         ref={(navigator) => {!this.state.navigator ? this.setNavigator(navigator) : null }}
+                        configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
                     />
                 </View>
             </DrawerLayoutAndroid>)
