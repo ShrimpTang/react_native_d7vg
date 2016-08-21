@@ -18,5 +18,10 @@
   },
   "devDependencies": {
     "http-proxy": "^1.14.0"
-  }
+  },
+  "keywords":[
+    "d7vg",
+    "p9",
+    "PNINE"
+  ]
 }
