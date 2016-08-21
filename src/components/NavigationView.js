@@ -34,10 +34,20 @@ var user = {
     "datadate": "1471490136"
 }
 class NavigationView extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentNav: 'topic'
+        }
+    }
+
     static contextTypes = {
         navigator: React.PropTypes.object,
-        drawer:React.PropTypes.object
+        drawer:React.PropTypes.object,
     };
+
+
     render() {
         return (<View style={{flex:1}}>
             <View style={{height:200,backgroundColor:'#1565C0'}}>
@@ -46,24 +56,26 @@ class NavigationView extends Component {
                 </View>
             </View>
             <ScrollView style={{flexDirection:'column'}}>
-                <NavigationItem {...this.context} name="topic" displayName="社区" iconName="home"/>
-                <NavigationItem {...this.context} name="game" displayName="游戏" iconName="videogame-asset"/>
-                <NavigationItem {...this.context} name="store" displayName="Store" iconName="store"/>
-                <NavigationItem {...this.context} name="battle" displayName="约战" iconName="group"/>
-                <NavigationItem {...this.context} name="gene" displayName="机因" iconName="public"/>
-                <NavigationItem {...this.context} name="settings" displayName="设置" iconName="settings"/>
+                <NavigationItem {...this.context} changeCurrentNav={this.changeCurrentNav.bind(this)} currentNav={this.state.currentNav} name="topic" displayName="社区" iconName="home"/>
+                {
+                   // <NavigationItem {...this.context} changeCurrentNav={this.changeCurrentNav.bind(this)} currentNav={this.state.currentNav} name="game" displayName="游戏" iconName="videogame-asset"/>
+                    //<NavigationItem {...this.context} changeCurrentNav={this.changeCurrentNav.bind(this)} currentNav={this.state.currentNav} name="store" displayName="Store" iconName="store"/>
+                }
+
+
+                <NavigationItem {...this.context} changeCurrentNav={this.changeCurrentNav.bind(this)} currentNav={this.state.currentNav} name="battle" displayName="约战" iconName="group"/>
+                <NavigationItem {...this.context} changeCurrentNav={this.changeCurrentNav.bind(this)} currentNav={this.state.currentNav} name="gene" displayName="机因" iconName="public"/>
+                {
+                    //<NavigationItem {...this.context} changeCurrentNav={this.changeCurrentNav.bind(this)} currentNav={this.state.currentNav} name="settings" displayName="设置" iconName="settings"/>
+                }
+
             </ScrollView>
         </View>)
     }
-    onItemPress(name){
-        var {navigator,drawer} =  this.context;
-        if(navigator && drawer){
-            drawer.closeDrawer();
-            navigator.push({
-                name
-            })
-
-        }
+    changeCurrentNav(name){
+        this.setState({
+            currentNav:name
+        })
     }
 }
 export default NavigationView;

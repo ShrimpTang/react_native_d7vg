@@ -8,7 +8,8 @@ import {
     DrawerLayoutAndroid,
     StatusBar,
     Navigator,
-    BackAndroid
+    BackAndroid,
+    Dimensions
 } from 'react-native';
 import TopicLayout from './src/layouts/TopicLayout'
 import GeneLayout from './src/layouts/GeneLayout'
@@ -27,10 +28,15 @@ class react_native_d7vg extends Component {
         super(props, context)
         this.state = {
             navigator: null,
-            drawer: null
+            drawer: null,
         }
+        this.drawerOpen = false;
         BackAndroid.addEventListener('hardwareBackPress', ()=> {
             var nav = this.state.navigator;
+            if (this.drawerOpen) {
+                this.state.drawer.closeDrawer();
+                return true;
+            }
             if (nav && nav.getCurrentRoutes().length > 1) {
                 nav.pop();
                 return true;
@@ -53,14 +59,23 @@ class react_native_d7vg extends Component {
 
     static childContextTypes = {
         navigator: React.PropTypes.object,
-        drawer: React.PropTypes.object
+        drawer: React.PropTypes.object,
+
     };
 
     getChildContext() {
         return {
             navigator: this.state.navigator,
-            drawer: this.state.drawer
+            drawer: this.state.drawer,
         }
+    }
+
+    onDrawerClose(){
+        this.drawerOpen = false;
+    }
+
+    onDrawerOpen(){
+        this.drawerOpen = true;
     }
 
     render() {
@@ -73,6 +88,8 @@ class react_native_d7vg extends Component {
                 drawerPosition={DrawerLayoutAndroid.positions.Left}
                 statusBarBackgroundColor='#1565C0'
                 renderNavigationView={() => navigationView}
+                onDrawerOpen={this.onDrawerOpen.bind(this)}
+                onDrawerClose={this.onDrawerClose.bind(this)}
                 ref={drawer=>{!this.state.drawer?this.setDrawer(drawer):null}}
             >
                 <View style={{flex: 1}}>

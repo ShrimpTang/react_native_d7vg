@@ -10,6 +10,11 @@ class WebViewLayout extends Component {
         navigator: React.PropTypes.object,
         drawer: React.PropTypes.object
     };
+    onIconClicked() {
+        if (this.context.drawer) {
+            this.context.drawer.openDrawer();
+        }
+    }
 
     render() {
         return (
@@ -20,6 +25,7 @@ class WebViewLayout extends Component {
                     titleColor="#fff"
                     navIconName="menu"
                     iconColor={'white'}
+                    onIconClicked={this.onIconClicked.bind(this)}
                     actions={[
                             //{title:'收藏',show:'always',iconName:'star-border'},
                             //{title:'感谢',show:'always',iconName:'favorite-border'},

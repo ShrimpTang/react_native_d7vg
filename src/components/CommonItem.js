@@ -33,7 +33,6 @@ class CommonItem extends React.Component {
         if(type=='group'){
             type='gene'
         }
-        console.log(item,type)
         if (item && type && navigator) {
             var uri = config.baseUrl + type + '/' + item.id;
             navigator.push({
